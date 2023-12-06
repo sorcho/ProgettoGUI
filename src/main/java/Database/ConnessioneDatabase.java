@@ -19,7 +19,7 @@ public class ConnessioneDatabase {
         }
     }
 
-    public ConnessioneDatabase getInstance() throws SQLException {
+    public static ConnessioneDatabase getInstance() throws SQLException {
         if (instance == null)
             instance = new ConnessioneDatabase();
         else if (instance.connection.isClosed())
