@@ -27,4 +27,7 @@ public class ConnessioneDatabase {
         return instance;
     }
 
+    public Connection getConnection() throws SQLException {
+        return connection;
+    }
 }
