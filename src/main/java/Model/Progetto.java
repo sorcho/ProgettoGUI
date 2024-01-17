@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Progetto {
     private String cup; // CUP
-    private Impiegato refSci;
-    private Impiegato resp;
+    private String refSci;
+    private String resp;
     private String nome;
     private float budget;
     private ArrayList<Laboratorio> listaLaboratori = new ArrayList<>();
     private ArrayList<Attrezzatura> listaAttrezzatura = new ArrayList<>();
 
-    public Progetto(String cup, Impiegato refSci, Impiegato resp, String nome, float budget) {
+    public Progetto(String cup, String refSci, String resp, String nome, float budget) {
         this.cup = cup;
         this.refSci = refSci;
         this.resp = resp;
@@ -43,19 +43,19 @@ public class Progetto {
         this.cup = cup;
     }
 
-    public Impiegato getRefSci() {
+    public String getRefSci() {
         return refSci;
     }
 
-    public void setRefSci(Impiegato refSci) {
+    public void setRefSci(String refSci) {
         this.refSci = refSci;
     }
 
-    public Impiegato getResp() {
+    public String getResp() {
         return resp;
     }
 
-    public void setResp(Impiegato resp) {
+    public void setResp(String resp) {
         this.resp = resp;
     }
 

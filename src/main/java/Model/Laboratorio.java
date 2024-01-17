@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Laboratorio {
     private String nome;
-    private Impiegato RespSci;
+    private String RespSci;
     private String topic;
     private int n_afferenti = 0;
-    private Progetto progetto;
+    private String progetto;
     private ArrayList<Impiegato> listaAfferenti = new ArrayList<>();
     private ArrayList<Attrezzatura> listaAttrezzatura = new ArrayList<>();
 
-    public Laboratorio(String nome, Impiegato respSci, String topic) {
+    public Laboratorio(String nome, String respSci, String topic) {
         this.nome = nome;
         RespSci = respSci;
         this.topic = topic;
@@ -43,11 +43,11 @@ public class Laboratorio {
         this.nome = nome;
     }
 
-    public Impiegato getRespSci() {
+    public String getRespSci() {
         return RespSci;
     }
 
-    public void setRespSci(Impiegato respSci) {
+    public void setRespSci(String respSci) {
         RespSci = respSci;
     }
 
@@ -67,11 +67,11 @@ public class Laboratorio {
         this.n_afferenti = n_afferenti;
     }
 
-    public Progetto getProgetto() {
+    public String getProgetto() {
         return progetto;
     }
 
-    public void setProgetto(Progetto progetto) {
+    public void setProgetto(String progetto) {
         this.progetto = progetto;
     }
 }

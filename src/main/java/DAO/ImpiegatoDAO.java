@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface ImpiegatoDAO {
     /**
@@ -51,4 +52,10 @@ public interface ImpiegatoDAO {
      * @throws SQLException Lancia un'eccezione se fallisce l'operazione sul database
      */
     boolean promuoviImpiegato(String cf, String promotoreDirigente) throws SQLException;
+
+    boolean getAfferenze(
+            String cf,
+            ArrayList<String> listaLaboratori
+    );
+
 }

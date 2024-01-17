@@ -1,18 +1,27 @@
 package Controller;
 
 import DAO.GestionaleDAO;
+import DAO.ImpiegatoDAO;
 import ImplementazionePostgresDAO.ImplementazioneGestionaleDAO;
+import ImplementazionePostgresDAO.ImplementazioneImpiegatoDAO;
 import Model.Impiegato;
+import Model.Laboratorio;
+import Model.Progetto;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+    // TODO aggiungi documentazione funzioni
     private List<Impiegato> listaImpiegati = new ArrayList<>();
+    private List<Laboratorio> listaLaboratori = new ArrayList<>();
+    private List<Progetto> listaProgetti = new ArrayList<>();
 
     public Controller() {
         getImpiegatiDatabase();
+        getLaboratoriDatabase();
     }
 
     private void getImpiegatiDatabase() {
@@ -56,29 +65,94 @@ public class Controller {
                     listaTipiContratto.get(i)
             ));
         }
-    };
-    public ArrayList<String> getListaCF(){
+    }
+
+    ;
+
+    private void getLaboratoriDatabase() {
+        GestionaleDAO gestionale = new ImplementazioneGestionaleDAO();
+
+        ArrayList<String> listaNomi = new ArrayList<>();
+        ArrayList<String> listaRespSci = new ArrayList<>();
+        ArrayList<String> listaTopic = new ArrayList<>();
+        ArrayList<Integer> listaNAfferenti = new ArrayList<>();
+
+        gestionale.getLaboratori(listaNomi, listaRespSci, listaTopic, listaNAfferenti);
+
+        for (int i = 0; i < listaNomi.size(); i++) {
+            listaLaboratori.add(new Laboratorio(
+                    listaNomi.get(i),
+                    listaRespSci.get(i),
+                    listaTopic.get(i)
+            ));
+        }
+    }
+
+    public ArrayList<String> getListaCF() {
         ArrayList<String> listaCF = new ArrayList<>();
 
         for (Impiegato i : listaImpiegati)
             listaCF.add(i.getCf());
 
         return listaCF;
-    };
-    public ArrayList<String> getListaNomi(){
+    }
+
+    ;
+
+    public ArrayList<String> getListaNomi() {
         ArrayList<String> listaNomi = new ArrayList<>();
 
         for (Impiegato i : listaImpiegati)
             listaNomi.add(i.getNome());
 
         return listaNomi;
-    };
-    public ArrayList<String> getListaCognomi(){
+    }
+
+    ;
+
+    public ArrayList<String> getListaCognomi() {
         ArrayList<String> listaCognomi = new ArrayList<>();
 
         for (Impiegato i : listaImpiegati)
             listaCognomi.add(i.getCognome());
 
         return listaCognomi;
+    }
+
+    ;
+
+    public ArrayList<String> getListaLaboratoriFromCF(String CF) {
+        ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
+
+        Impiegato impiegato = null;
+
+        for (Impiegato i : listaImpiegati) {
+            if (i.getCf().equals(CF)) {
+                impiegato = i;
+                break;
+            }
+        }
+
+        ArrayList<String> listaLaboratoriImpiegato = new ArrayList<>();
+        boolean risultato = impiegatoDAO.getAfferenze(CF, listaLaboratoriImpiegato);
+
+        if (risultato) {
+            assert impiegato != null;
+            for (Laboratorio l : listaLaboratori)
+                for(String s : listaLaboratoriImpiegato)
+                    if (l.getNome().equals(s))
+                        impiegato.addLaboratorio(l);
+        }
+
+        return listaLaboratoriImpiegato;
+    };
+
+    public void aggiungiImpiegato(String cf, String nome, String cognome, Date dataNasc, Date dataAss, Date dataScad, String categoria, String cup) throws SQLException {
+        ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
+
+        if (dataScad == null)
+            impiegatoDAO.assumiImpiegato(cf, nome, cognome, dataNasc, dataAss, categoria);
+        else
+            impiegatoDAO.assumiImpiegatoProgetto(cf, nome, cognome, dataNasc, dataAss, dataScad, cup);
     };
 }
