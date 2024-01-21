@@ -3,13 +3,10 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 public class AddImpiegato{
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -108,8 +105,6 @@ public class AddImpiegato{
                 try {
                     controller.aggiungiImpiegato(cf, nome, cognome, dataNascita, dataAssunzione, dataScadenza, categoria, cup);
                     JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
-
-
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }

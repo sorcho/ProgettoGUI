@@ -150,9 +150,23 @@ public class Controller {
     public void aggiungiImpiegato(String cf, String nome, String cognome, Date dataNasc, Date dataAss, Date dataScad, String categoria, String cup) throws SQLException {
         ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
 
+        boolean risultato;
+
         if (dataScad == null)
-            impiegatoDAO.assumiImpiegato(cf, nome, cognome, dataNasc, dataAss, categoria);
+            risultato = impiegatoDAO.assumiImpiegato(cf, nome, cognome, dataNasc, dataAss, categoria);
         else
-            impiegatoDAO.assumiImpiegatoProgetto(cf, nome, cognome, dataNasc, dataAss, dataScad, cup);
+            risultato = impiegatoDAO.assumiImpiegatoProgetto(cf, nome, cognome, dataNasc, dataAss, dataScad, cup);
+
+        if (risultato)
+            getImpiegatiDatabase();
     };
+
+    public void rimuoviImpiegato(String cf) throws SQLException {
+        ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
+
+        boolean risultato = impiegatoDAO.licenziaImpiegato(cf);
+
+        if (risultato)
+            getImpiegatiDatabase();
+    }
 }

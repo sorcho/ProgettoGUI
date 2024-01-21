@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ImpiegatoGUI {
@@ -43,11 +44,12 @@ public class ImpiegatoGUI {
 
         labList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         DefaultListCellRenderer renderer =
-                (DefaultListCellRenderer)labList.getCellRenderer();
+                (DefaultListCellRenderer) labList.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Settaggio della tabella contenente tutti gli impiegati dell'azienda
         String[] colonne = {"CF", "Nome", "Cognome"};
+
         ArrayList<String> listaCF = controller.getListaCF();
         ArrayList<String> listaNomi = controller.getListaNomi();
         ArrayList<String> listaCognomi = controller.getListaCognomi();
@@ -75,7 +77,7 @@ public class ImpiegatoGUI {
 
                 dfl.removeAllElements();
 
-                for (String s : arrayLaboratori) dfl.addElement((Object) s);
+                for (String s : arrayLaboratori) dfl.addElement(s);
             }
 
             @Override
@@ -112,10 +114,44 @@ public class ImpiegatoGUI {
             addImpiegato.frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    frame.dispose();
-                    new ImpiegatoGUI(controller, frameChiamante);
+                    loadTable(controller, colonne);
                 }
             });
         });
+
+        // settaggio del bottone per l'eliminazione di un impiegato
+        removeButton.addActionListener(e -> {
+            String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
+
+            int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler licenziare l'impigato?", "Conferma", JOptionPane.YES_NO_OPTION);
+
+            if (selezione == JOptionPane.YES_OPTION) {
+                try {
+                    controller.rimuoviImpiegato(cfSelezionato);
+                    JOptionPane.showMessageDialog(null, "Eliminazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                }
+
+                loadTable(controller, colonne);
+            }
+        });
+    }
+
+    private void loadTable(Controller controller, String[] colonne) {
+        ArrayList<String> listaCF = controller.getListaCF();
+        ArrayList<String> listaNomi = controller.getListaNomi();
+        ArrayList<String> listaCognomi = controller.getListaCognomi();
+
+        String[][] righe = new String[listaCF.size()][3];
+
+        for (int i = 0; i < listaCF.size(); i++) {
+            righe[i][0] = listaCF.get(i);
+            righe[i][1] = listaNomi.get(i);
+            righe[i][2] = listaCognomi.get(i);
+        }
+
+        DefaultTableModel dtm = (DefaultTableModel) impTable.getModel();
+        dtm.setDataVector(righe, colonne);
     }
 }
