@@ -139,34 +139,36 @@ public class Controller {
         if (risultato) {
             assert impiegato != null;
             for (Laboratorio l : listaLaboratori)
-                for(String s : listaLaboratoriImpiegato)
+                for (String s : listaLaboratoriImpiegato)
                     if (l.getNome().equals(s))
                         impiegato.addLaboratorio(l);
         }
 
         return listaLaboratoriImpiegato;
-    };
+    }
+
+    ;
 
     public void aggiungiImpiegato(String cf, String nome, String cognome, Date dataNasc, Date dataAss, Date dataScad, String categoria, String cup) throws SQLException {
         ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
 
-        boolean risultato;
-
         if (dataScad == null)
-            risultato = impiegatoDAO.assumiImpiegato(cf, nome, cognome, dataNasc, dataAss, categoria);
+            impiegatoDAO.assumiImpiegato(cf, nome, cognome, dataNasc, dataAss, categoria);
         else
-            risultato = impiegatoDAO.assumiImpiegatoProgetto(cf, nome, cognome, dataNasc, dataAss, dataScad, cup);
+            impiegatoDAO.assumiImpiegatoProgetto(cf, nome, cognome, dataNasc, dataAss, dataScad, cup);
 
-        if (risultato)
-            getImpiegatiDatabase();
-    };
+        listaImpiegati.clear();
+        getImpiegatiDatabase();
+    }
+
+    ;
 
     public void rimuoviImpiegato(String cf) throws SQLException {
         ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
 
-        boolean risultato = impiegatoDAO.licenziaImpiegato(cf);
+        impiegatoDAO.licenziaImpiegato(cf);
 
-        if (risultato)
-            getImpiegatiDatabase();
+        listaImpiegati.clear();
+        getImpiegatiDatabase();
     }
 }

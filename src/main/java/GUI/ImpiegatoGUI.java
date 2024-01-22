@@ -120,22 +120,22 @@ public class ImpiegatoGUI {
         });
 
         // settaggio del bottone per l'eliminazione di un impiegato
-        removeButton.addActionListener(e -> {
-            String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
-
-            int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler licenziare l'impigato?", "Conferma", JOptionPane.YES_NO_OPTION);
-
-            if (selezione == JOptionPane.YES_OPTION) {
-                try {
-                    controller.rimuoviImpiegato(cfSelezionato);
-                    JOptionPane.showMessageDialog(null, "Eliminazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-                }
-
-                loadTable(controller, colonne);
-            }
-        });
+//        removeButton.addActionListener(e -> {
+//            String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
+//
+//            int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler licenziare l'impigato?", "Conferma", JOptionPane.YES_NO_OPTION);
+//
+//            if (selezione == JOptionPane.YES_OPTION) {
+//                try {
+//                    controller.rimuoviImpiegato(cfSelezionato);
+//                    JOptionPane.showMessageDialog(null, "Eliminazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+//                } catch (SQLException ex) {
+//                    JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+//                }
+//
+//                loadTable(controller, colonne);
+//            }
+//        });
     }
 
     private void loadTable(Controller controller, String[] colonne) {
