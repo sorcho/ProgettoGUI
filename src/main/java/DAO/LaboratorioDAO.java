@@ -19,4 +19,8 @@ public interface LaboratorioDAO {
      * @throws SQLException Lancia un'eccezione se fallisce l'operazione sul database
      */
     boolean aggiungiAfferente(String cf, String nomeLab) throws SQLException;
+
+    boolean rimuoviLaboratorio(String nomeLab) throws SQLException;
+
+    //boolean getProgetto(String nomeLab, String cup);
 }

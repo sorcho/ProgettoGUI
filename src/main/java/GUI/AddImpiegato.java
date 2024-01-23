@@ -78,7 +78,7 @@ public class AddImpiegato{
 
             int risposta = JOptionPane.showConfirmDialog(null, "Confermi di voler assumere questo impiegato?", "Conferma", JOptionPane.YES_NO_OPTION);
 
-            if (risposta == 0) {
+            if (risposta == JOptionPane.YES_OPTION) {
                 cf = cfTextField.getText();
                 nome = nomeTextField.getText();
                 cognome = cognomeTextField.getText();

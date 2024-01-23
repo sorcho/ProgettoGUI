@@ -2,6 +2,7 @@ package ImplementazionePostgresDAO;
 
 import DAO.ImpiegatoDAO;
 import Database.ConnessioneDatabase;
+import Model.Promozione;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -92,4 +93,26 @@ public class ImplementazioneImpiegatoDAO implements ImpiegatoDAO {
             return false;
         }
     }
+
+    @Override
+    public boolean getPromozioni(String cf, ArrayList<Promozione> listaPromozioni) {
+        try {
+            PreparedStatement query;
+
+            query = connection.prepareStatement("SELECT * from promozione where cf = ?");
+            query.setString(1, cf);
+
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next()) {
+                listaPromozioni.add(new Promozione(rs.getDate("data_passaggio"), rs.getString("vecchia_categoria"), rs.getString("nuova_categoria"), rs.getString("promotore_dirigente"), cf));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

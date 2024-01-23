@@ -11,10 +11,12 @@ public class Laboratorio {
     private ArrayList<Impiegato> listaAfferenti = new ArrayList<>();
     private ArrayList<Attrezzatura> listaAttrezzatura = new ArrayList<>();
 
-    public Laboratorio(String nome, String respSci, String topic) {
+    public Laboratorio(String nome, String respSci, String topic, int n_afferenti, String progetto) {
         this.nome = nome;
         RespSci = respSci;
         this.topic = topic;
+        this.n_afferenti = n_afferenti;
+        this.progetto = progetto;
     }
 
     public void addAfferente(Impiegato i){

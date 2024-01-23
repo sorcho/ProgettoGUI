@@ -1,5 +1,8 @@
 package DAO;
 
+import Model.Promozione;
+
+import java.sql.Array;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,6 +59,11 @@ public interface ImpiegatoDAO {
     boolean getAfferenze(
             String cf,
             ArrayList<String> listaLaboratori
+    );
+
+    boolean getPromozioni(
+            String cf,
+            ArrayList<Promozione> listaPromozioni
     );
 
 }

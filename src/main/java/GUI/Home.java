@@ -25,12 +25,14 @@ public class Home {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        impiegatiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                ImpiegatoGUI impiegatoGUI = new ImpiegatoGUI(controller, frame);
-            }
+        impiegatiButton.addActionListener(e -> {
+            frame.setVisible(false);
+            ImpiegatoGUI impiegatoGUI = new ImpiegatoGUI(controller, frame);
+        });
+
+        laboratoriButton.addActionListener(e -> {
+            frame.setVisible(false);
+            LaboratoriGUI laboratoriGUI = new LaboratoriGUI(controller, frame);
         });
     }
 }
