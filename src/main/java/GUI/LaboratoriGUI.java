@@ -41,7 +41,7 @@ public class LaboratoriGUI {
         ArrayList<String> listaRespSci = controller.getListaRespSci();
         ArrayList<String> listaTopic = controller.getListaTopic();
         ArrayList<Integer> listaNAfferenti = controller.getListaNAfferenti();
-        ArrayList<String> listaProgetti = controller.getListaProgetti();
+        ArrayList<String> listaProgetti = controller.getListaProgettiAssociati();
 
         String[] colonne = {"Nome", "Responsabile Scientifico", "Topic", "Numero Afferenti", "Progetto Associato"};
         Object[][] righe = new Object[listaNomiLaboratori.size()][5];
@@ -125,7 +125,7 @@ public class LaboratoriGUI {
         ArrayList<String> listaRespSci = controller.getListaRespSci();
         ArrayList<String> listaTopic = controller.getListaTopic();
         ArrayList<Integer> listaNAfferenti = controller.getListaNAfferenti();
-        ArrayList<String> listaProgetti = controller.getListaProgetti();
+        ArrayList<String> listaProgetti = controller.getListaProgettiAssociati();
 
         Object[][] righe = new Object[listaNomiLaboratori.size()][5];
 
