@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 public class ImpiegatoGUI {
     private JPanel impMainPanel;
     DefaultTableModel tableModel;
-
     private JFrame frame;
     private JPanel buttonsPanel;
     private JPanel tablePanel;
@@ -35,6 +35,7 @@ public class ImpiegatoGUI {
 
         frame = new JFrame("Impiegati");
         frame.setSize(1000, 700);
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setContentPane(impMainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,10 +73,16 @@ public class ImpiegatoGUI {
             }
         };
 
+        impTable.setFont(new Font("JetBrains Mono", Font.PLAIN, 16)); //setta il font delle celle della tabella
         impTable.setModel(tableModel);
         impTable.setRowHeight(30);
 
-        Font headerFont = new Font("JetBrains Mono", Font.BOLD, 20);
+        impTable.getTableHeader().setReorderingAllowed(false); //fa in modo che le colonne non si spostino
+        impTable.getTableHeader().setResizingAllowed(false); //fa in modo che la dimensione delle colenne non sia personalizzabile dall'utente
+
+        resizeWidthTable(impTable); //serve per settare la larghezza delle colonne
+
+        Font headerFont = new Font("JetBrains Mono", Font.BOLD, 16);
         impTable.getTableHeader().setFont(headerFont);
 
         // IMPOSTO IL MOUSE LISTENER CHE VISUALIZZA I LABORATORI AI QUALI L'IMPIEGATO LAVORA
@@ -126,6 +133,7 @@ public class ImpiegatoGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(impTable);
                 }
             });
         });
@@ -144,6 +152,7 @@ public class ImpiegatoGUI {
                 }
 
                 loadTable(controller, colonne);
+                resizeWidthTable(impTable);
             }
         });
 
@@ -176,6 +185,7 @@ public class ImpiegatoGUI {
                 }
             }
             loadTable(controller, colonne);
+            resizeWidthTable(impTable);
         });
     }
 
@@ -194,5 +204,19 @@ public class ImpiegatoGUI {
 
         DefaultTableModel dtm = (DefaultTableModel) impTable.getModel();
         dtm.setDataVector(righe, colonne);
+    }
+
+    private void resizeWidthTable(JTable table) {
+        table.getColumnModel().getColumn(0).setPreferredWidth(250);
+        table.getColumnModel().getColumn(1).setPreferredWidth(120);
+        table.getColumnModel().getColumn(2).setPreferredWidth(120);
+
+        table.getColumnModel().getColumn(0).setMinWidth(250);
+        table.getColumnModel().getColumn(1).setMinWidth(120);
+        table.getColumnModel().getColumn(2).setMinWidth(120);
+
+        table.getColumnModel().getColumn(0).setMaxWidth(250);
+        table.getColumnModel().getColumn(1).setMaxWidth(120);
+        table.getColumnModel().getColumn(2).setMaxWidth(120);
     }
 }

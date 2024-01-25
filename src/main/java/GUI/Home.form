@@ -18,7 +18,7 @@
           <component id="34aae" class="javax.swing.JLabel" binding="titleLabel">
             <constraints/>
             <properties>
-              <font name="JetBrains Mono" size="48" style="1"/>
+              <font name="JetBrains Mono" size="36" style="1"/>
               <text value="GESTIONALE DELL'AZIENDA"/>
             </properties>
           </component>

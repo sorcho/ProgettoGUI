@@ -43,6 +43,7 @@ public class AddImpiegatoGUI {
         frame.setLocationRelativeTo(null);
         frame.setContentPane(addImpMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setResizable(false);
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
