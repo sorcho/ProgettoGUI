@@ -4,10 +4,10 @@ public class Attrezzatura {
     private String seriale;
     private String tipo;
     private float costo;
-    private Laboratorio nomeLab;
-    private Progetto cup;
+    private String nomeLab;
+    private String cup;
 
-    public Attrezzatura(String seriale, String tipo, float costo, Laboratorio nomeLab, Progetto cup) {
+    public Attrezzatura(String seriale, String tipo, float costo, String nomeLab, String cup) {
         this.seriale = seriale;
         this.tipo = tipo;
         this.costo = costo;
@@ -39,19 +39,19 @@ public class Attrezzatura {
         this.costo = costo;
     }
 
-    public Laboratorio getNomeLab() {
+    public String getNomeLab() {
         return nomeLab;
     }
 
-    public void setNomeLab(Laboratorio nomeLab) {
+    public void setNomeLab(String nomeLab) {
         this.nomeLab = nomeLab;
     }
 
-    public Progetto getCup() {
+    public String getCup() {
         return cup;
     }
 
-    public void setCup(Progetto cup) {
+    public void setCup(String cup) {
         this.cup = cup;
     }
 }

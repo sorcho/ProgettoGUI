@@ -4,26 +4,28 @@ import java.util.ArrayList;
 
 public class Laboratorio {
     private String nome;
-    private Impiegato RespSci;
+    private String RespSci;
     private String topic;
     private int n_afferenti = 0;
-    private Progetto progetto;
-    private ArrayList<Impiegato> listaAfferenti = new ArrayList<>();
+    private String progetto;
+    private ArrayList<String> listaAfferenti = new ArrayList<>();
     private ArrayList<Attrezzatura> listaAttrezzatura = new ArrayList<>();
 
-    public Laboratorio(String nome, Impiegato respSci, String topic) {
+    public Laboratorio(String nome, String respSci, String topic, int n_afferenti, String progetto) {
         this.nome = nome;
         RespSci = respSci;
         this.topic = topic;
+        this.n_afferenti = n_afferenti;
+        this.progetto = progetto;
     }
 
-    public void addAfferente(Impiegato i){
-        listaAfferenti.add(i);
+    public void addAfferente(String s){
+        listaAfferenti.add(s);
         this.n_afferenti += 1;
     }
 
-    public void removeAfferente(Impiegato i){
-        listaAfferenti.remove(i);
+    public void removeAfferente(String s){
+        listaAfferenti.remove(s);
         this.n_afferenti -= 1;
     }
 
@@ -43,11 +45,11 @@ public class Laboratorio {
         this.nome = nome;
     }
 
-    public Impiegato getRespSci() {
+    public String getRespSci() {
         return RespSci;
     }
 
-    public void setRespSci(Impiegato respSci) {
+    public void setRespSci(String respSci) {
         RespSci = respSci;
     }
 
@@ -67,11 +69,19 @@ public class Laboratorio {
         this.n_afferenti = n_afferenti;
     }
 
-    public Progetto getProgetto() {
+    public String getProgetto() {
         return progetto;
     }
 
-    public void setProgetto(Progetto progetto) {
+    public void setProgetto(String progetto) {
         this.progetto = progetto;
+    }
+
+    public ArrayList<String> getListaAfferenti() {
+        return listaAfferenti;
+    }
+
+    public void setListaAfferenti(ArrayList<String> listaAfferenti) {
+        this.listaAfferenti = listaAfferenti;
     }
 }

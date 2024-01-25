@@ -41,7 +41,8 @@ public interface GestionaleDAO {
             ArrayList<String> listaNomi,
             ArrayList<String> listaRespSci,
             ArrayList<String> listaTopic,
-            ArrayList<Integer> listaNAfferenti
+            ArrayList<Integer> listaNAfferenti,
+            ArrayList<String> listaProgetti
     );
 
     /**
@@ -74,5 +75,18 @@ public interface GestionaleDAO {
             ArrayList<String> listaResp,
             ArrayList<String> listaNomi,
             ArrayList<Float> listaBudget
+    );
+
+    void getPromozioni(
+            ArrayList<String> listaCF,
+            ArrayList<Date> listaDatePassaggio,
+            ArrayList<String> listaVecchieCategorie,
+            ArrayList<String> listaNuoveCategorie,
+            ArrayList<String> listaPromotoriDirigenti
+    );
+
+    void getListaAfferenti(
+            String nomeLab,
+            ArrayList<String> listaAfferenti
     );
 }

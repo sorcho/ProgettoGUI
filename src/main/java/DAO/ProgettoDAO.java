@@ -21,11 +21,5 @@ public interface ProgettoDAO {
      */
     boolean collegaLaboratorio(String nomeLab, String cup) throws SQLException;
 
-    /**
-     * @param seriale Seriale dell'attrezzatura da acquistare
-     * @param nomeLab Laboratorio che utilizza l'attrezzatura
-     * @return Restituisce il successo o il fallimento dell'operazione
-     * @throws SQLException Lancia un'eccezione se fallisce l'operazione sul database
-     */
-    boolean acquistaAttrezzatura(String seriale, String nomeLab) throws SQLException;
+    boolean eliminaProgetto(String cup) throws SQLException;
 }

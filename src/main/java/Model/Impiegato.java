@@ -16,7 +16,7 @@ public class Impiegato {
     private String tipoContratto;
 
     private ArrayList<Promozione> listaPromozioni = new ArrayList<>();
-    private ArrayList<Laboratorio> listaLaboratori = new ArrayList<>();
+    private ArrayList<String> listaLaboratori = new ArrayList<>();
 
     public Impiegato(String cf, String nome, String cognome, Date dataNascita, Date dataAssunzione, int eta, String categoria, float salario, Date dataScadenza, String tipoContratto) {
         this.cf = cf;
@@ -35,7 +35,7 @@ public class Impiegato {
         listaPromozioni.add(p);
     }
 
-    public void addLaboratorio(Laboratorio l){
+    public void addLaboratorio(String l){
         listaLaboratori.add(l);
     }
 
@@ -43,7 +43,7 @@ public class Impiegato {
         listaPromozioni.remove(p);
     }
 
-    public void removeLaboratorio(Laboratorio l){
+    public void removeLaboratorio(String l){
         listaLaboratori.remove(l);
     }
 
@@ -125,5 +125,21 @@ public class Impiegato {
 
     public void setTipoContratto(String tipoContratto) {
         this.tipoContratto = tipoContratto;
+    }
+
+    public ArrayList<Promozione> getListaPromozioni() {
+        return listaPromozioni;
+    }
+
+    public void setListaPromozioni(ArrayList<Promozione> listaPromozioni) {
+        this.listaPromozioni = listaPromozioni;
+    }
+
+    public ArrayList<String> getListaLaboratori() {
+        return listaLaboratori;
+    }
+
+    public void setListaLaboratori(ArrayList<String> listaLaboratori) {
+        this.listaLaboratori = listaLaboratori;
     }
 }

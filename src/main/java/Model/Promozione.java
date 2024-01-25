@@ -7,9 +7,9 @@ public class Promozione {
     private String vecchiaCategoria;
     private String nuovaCategoria;
     private String promotoreDirigente;
-    private Impiegato impiegato;
+    private String impiegato;
 
-    public Promozione(Date dataPassaggio, String vecchiaCategoria, String nuovaCategoria, String promotoreDirigente, Impiegato impiegato) {
+    public Promozione(Date dataPassaggio, String vecchiaCategoria, String nuovaCategoria, String promotoreDirigente, String impiegato) {
         this.dataPassaggio = dataPassaggio;
         this.vecchiaCategoria = vecchiaCategoria;
         this.nuovaCategoria = nuovaCategoria;
@@ -49,11 +49,11 @@ public class Promozione {
         this.promotoreDirigente = promotoreDirigente;
     }
 
-    public Impiegato getImpiegato() {
+    public String getImpiegato() {
         return impiegato;
     }
 
-    public void setImpiegato(Impiegato impiegato) {
+    public void setImpiegato(String impiegato) {
         this.impiegato = impiegato;
     }
 }
