@@ -45,8 +45,6 @@ public class ProfiloImpiegatoGUI {
 
         Impiegato i = controller.getDatiProfilo(cfChiamante);
 
-        System.out.println(i.toString());
-
         String[] colonne = {"Data di Passaggio", "Vecchia Categoria", "Nuova Categoria", "Promotore Dirigente"};
 
         Object[][] righe = new Object[i.getListaPromozioni().size()][4];
