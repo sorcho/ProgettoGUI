@@ -142,4 +142,23 @@ public class ImplementazioneGestionaleDAO implements GestionaleDAO {
             System.out.println("Errore nella lettura di dati dal database.");
         }
     }
+
+    @Override
+    public void getListaAfferenti(String nomeLab, ArrayList<String> listaAfferenti) {
+        try {
+            PreparedStatement query;
+            query = connection.prepareStatement("select cf from utilizza where nome_lab = ?");
+
+            query.setString(1, nomeLab);
+
+            ResultSet rs = query.executeQuery();
+
+            while (rs.next())
+                listaAfferenti.add(rs.getString(1));
+
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Errore nella lettura di dati dal database.");
+        }
+    }
 }

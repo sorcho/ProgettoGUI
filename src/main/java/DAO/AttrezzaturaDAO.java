@@ -10,4 +10,6 @@ public interface AttrezzaturaDAO {
      * @throws SQLException Lancia un'eccezione se fallisce l'operazione sul database
      */
     boolean aggiungiAttrezzatura(String seriale, String tipo) throws SQLException;
+
+    boolean eliminaAttrezzatura(String seriale) throws SQLException;
 }

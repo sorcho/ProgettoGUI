@@ -10,10 +10,10 @@ import java.sql.SQLException;
 public class ImplementazioneProgettoDAO implements ProgettoDAO {
     private Connection connection;
 
-    public ImplementazioneProgettoDAO(){
-        try{
+    public ImplementazioneProgettoDAO() {
+        try {
             connection = ConnessioneDatabase.getInstance().getConnection();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -21,7 +21,7 @@ public class ImplementazioneProgettoDAO implements ProgettoDAO {
     @Override
     public boolean aggiungiProgetto(String cup, String ref_sci, String resp, String nome) throws SQLException {
         PreparedStatement query;
-        query = connection.prepareCall("{call add_progetto(?, ?, ?, ?)}");
+        query = connection.prepareCall("call add_progetto(?, ?, ?, ?)");
         query.setString(1, cup);
         query.setString(2, ref_sci);
         query.setString(3, resp);
@@ -33,7 +33,7 @@ public class ImplementazioneProgettoDAO implements ProgettoDAO {
     @Override
     public boolean collegaLaboratorio(String nomeLab, String cup) throws SQLException {
         PreparedStatement query;
-        query = connection.prepareCall("{call add_lavora(?, ?)}");
+        query = connection.prepareCall("call add_lavora(?, ?)");
         query.setString(1, nomeLab);
         query.setString(2, cup);
         int risultato = query.executeUpdate();
@@ -41,11 +41,10 @@ public class ImplementazioneProgettoDAO implements ProgettoDAO {
     }
 
     @Override
-    public boolean acquistaAttrezzatura(String seriale, String nomeLab) throws SQLException {
+    public boolean eliminaProgetto(String cup) throws SQLException {
         PreparedStatement query;
-        query = connection.prepareCall("{call acquista_attrezzatura(?, ?)}");
-        query.setString(1, seriale);
-        query.setString(2, nomeLab);
+        query = connection.prepareStatement("DELETE FROM progetto WHERE cup = ?");
+        query.setString(1, cup);
         int risultato = query.executeUpdate();
         return risultato == 1;
     }

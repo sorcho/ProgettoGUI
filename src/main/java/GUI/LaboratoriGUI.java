@@ -18,6 +18,10 @@ public class LaboratoriGUI {
     private JButton deleteButton;
     private JScrollPane tableScrollPane;
     private JTable labTable;
+    private JButton collegaButton;
+    private JButton afferentiButton;
+    private JButton addAfferenteButton;
+    private JButton acquistaButton;
     private JFrame frame;
 
     public LaboratoriGUI(Controller controller, JFrame frameChiamante) {
@@ -78,6 +82,41 @@ public class LaboratoriGUI {
 
                 loadTable(controller, colonne);
             }
+        });
+
+        collegaButton.addActionListener(e -> {
+            String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
+            SelezionaCupGUI selezionaCupGUI = new SelezionaCupGUI(controller, frame, labSelezionato);
+
+            selezionaCupGUI.frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadTable(controller, colonne);
+                }
+            });
+        });
+
+        afferentiButton.addActionListener(e -> {
+            String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
+
+            new AfferentiGUI(controller, frame, labSelezionato);
+        });
+
+        addAfferenteButton.addActionListener(e -> {
+            String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
+            AddAfferenteGUI addAfferenteGUI = new AddAfferenteGUI(controller, frame, labSelezionato);
+            addAfferenteGUI.frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadTable(controller, colonne);
+                }
+            });
+        });
+
+        acquistaButton.addActionListener(e -> {
+            String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
+
+            new SelezionaSerialeGUI(controller, frame, labSelezionato);
         });
     }
 

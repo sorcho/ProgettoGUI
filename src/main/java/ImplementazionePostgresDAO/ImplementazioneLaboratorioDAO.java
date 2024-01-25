@@ -3,9 +3,12 @@ package ImplementazionePostgresDAO;
 import DAO.LaboratorioDAO;
 import Database.ConnessioneDatabase;
 
+import java.awt.geom.RectangularShape;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ImplementazioneLaboratorioDAO implements LaboratorioDAO {
     private Connection connection;
@@ -25,6 +28,16 @@ public class ImplementazioneLaboratorioDAO implements LaboratorioDAO {
         query.setString(1, nome);
         query.setString(2, resp_sci);
         query.setString(3, topic);
+        int risultato = query.executeUpdate();
+        return risultato == 1;
+    }
+
+    @Override
+    public boolean acquistaAttrezzatura(String seriale, String nomeLab) throws SQLException {
+        PreparedStatement query;
+        query = connection.prepareCall("call acquista_attrezzatura(?, ?)");
+        query.setString(1, seriale);
+        query.setString(2, nomeLab);
         int risultato = query.executeUpdate();
         return risultato == 1;
     }

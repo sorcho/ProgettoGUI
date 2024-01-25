@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="DarkPurpleTheme">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/DRIVER/DarkPurpleTheme.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

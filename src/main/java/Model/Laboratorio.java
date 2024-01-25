@@ -8,7 +8,7 @@ public class Laboratorio {
     private String topic;
     private int n_afferenti = 0;
     private String progetto;
-    private ArrayList<Impiegato> listaAfferenti = new ArrayList<>();
+    private ArrayList<String> listaAfferenti = new ArrayList<>();
     private ArrayList<Attrezzatura> listaAttrezzatura = new ArrayList<>();
 
     public Laboratorio(String nome, String respSci, String topic, int n_afferenti, String progetto) {
@@ -19,13 +19,13 @@ public class Laboratorio {
         this.progetto = progetto;
     }
 
-    public void addAfferente(Impiegato i){
-        listaAfferenti.add(i);
+    public void addAfferente(String s){
+        listaAfferenti.add(s);
         this.n_afferenti += 1;
     }
 
-    public void removeAfferente(Impiegato i){
-        listaAfferenti.remove(i);
+    public void removeAfferente(String s){
+        listaAfferenti.remove(s);
         this.n_afferenti -= 1;
     }
 
@@ -75,5 +75,13 @@ public class Laboratorio {
 
     public void setProgetto(String progetto) {
         this.progetto = progetto;
+    }
+
+    public ArrayList<String> getListaAfferenti() {
+        return listaAfferenti;
+    }
+
+    public void setListaAfferenti(ArrayList<String> listaAfferenti) {
+        this.listaAfferenti = listaAfferenti;
     }
 }

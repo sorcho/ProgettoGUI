@@ -34,5 +34,15 @@ public class Home {
             frame.setVisible(false);
             LaboratoriGUI laboratoriGUI = new LaboratoriGUI(controller, frame);
         });
+
+        progettiButton.addActionListener(e -> {
+            frame.setVisible(false);
+            ProgettoGUI progettoGUI = new ProgettoGUI(controller, frame);
+        });
+
+        attrezzatureButton.addActionListener(e -> {
+            frame.setVisible(false);
+            AttrezzaturaGUI attrezzaturaGUI = new AttrezzaturaGUI(controller, frame);
+        });
     }
 }

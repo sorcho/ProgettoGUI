@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class AddImpiegato{
+public class AddImpiegatoGUI {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     ButtonGroup bg = new ButtonGroup();
     private JPanel addImpMainPanel;
@@ -37,7 +37,7 @@ public class AddImpiegato{
     private JTextField cupTextField;
     JFrame frame;
 
-    public AddImpiegato(Controller controller, JFrame frameChiamante) {
+    public AddImpiegatoGUI(Controller controller, JFrame frameChiamante) {
         // Inizializzazione e settaggio del frame principale
         frame = new JFrame("Impiegati");
         frame.setLocationRelativeTo(null);

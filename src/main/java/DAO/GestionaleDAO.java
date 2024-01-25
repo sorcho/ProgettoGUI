@@ -84,4 +84,9 @@ public interface GestionaleDAO {
             ArrayList<String> listaNuoveCategorie,
             ArrayList<String> listaPromotoriDirigenti
     );
+
+    void getListaAfferenti(
+            String nomeLab,
+            ArrayList<String> listaAfferenti
+    );
 }

@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface LaboratorioDAO {
     /**
@@ -19,8 +20,13 @@ public interface LaboratorioDAO {
      * @throws SQLException Lancia un'eccezione se fallisce l'operazione sul database
      */
     boolean aggiungiAfferente(String cf, String nomeLab) throws SQLException;
+    /**
+     * @param seriale Seriale dell'attrezzatura da acquistare
+     * @param nomeLab Laboratorio che utilizza l'attrezzatura
+     * @return Restituisce il successo o il fallimento dell'operazione
+     * @throws SQLException Lancia un'eccezione se fallisce l'operazione sul database
+     */
+    boolean acquistaAttrezzatura(String seriale, String nomeLab) throws SQLException;
 
     boolean rimuoviLaboratorio(String nomeLab) throws SQLException;
-
-    //boolean getProgetto(String nomeLab, String cup);
 }

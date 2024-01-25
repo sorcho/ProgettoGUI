@@ -28,9 +28,11 @@ public class ImpiegatoGUI {
     private JButton profButton;
     private JList labList;
     private JLabel labLabel;
+    private JButton promuoviButton;
 
     public ImpiegatoGUI(Controller controller, JFrame frameChiamante) {
-        // Inizializzazione e settaggio del frame principale
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Impiegati");
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
@@ -47,7 +49,8 @@ public class ImpiegatoGUI {
                 (DefaultListCellRenderer) labList.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
-        // Settaggio della tabella contenente tutti gli impiegati dell'azienda
+        // POPOLO LA TABELLA DEGLI IMPIEGATI
+
         String[] colonne = {"CF", "Nome", "Cognome"};
 
         ArrayList<String> listaCF = controller.getListaCF();
@@ -62,11 +65,11 @@ public class ImpiegatoGUI {
             righe[i][2] = listaCognomi.get(i);
         }
 
-        DefaultTableModel tableModel = new DefaultTableModel(righe, colonne){
+        DefaultTableModel tableModel = new DefaultTableModel(righe, colonne) {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
-            };
+            }
         };
 
         impTable.setModel(tableModel);
@@ -75,7 +78,7 @@ public class ImpiegatoGUI {
         Font headerFont = new Font("JetBrains Mono", Font.BOLD, 20);
         impTable.getTableHeader().setFont(headerFont);
 
-        // Aggiunta del mouse listener che permette, alla selezione di un impiegato nella tabella, la visualizzazione dei laboratori e progetti associati allo stesso
+        // IMPOSTO IL MOUSE LISTENER CHE VISUALIZZA I LABORATORI AI QUALI L'IMPIEGATO LAVORA
         impTable.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -108,17 +111,18 @@ public class ImpiegatoGUI {
             }
         });
 
-        // BOTTONI
-        // settaggio del bottone per il ritorno alla home
+        // SETTO TUTTI GLI ACTION LISTENER PER I PULSANTI
+
+        // RITORNO ALLA HOME
         homeButton.addActionListener(e -> {
             frameChiamante.setVisible(true);
             frame.dispose();
         });
 
-        // settaggio del bottone per l'aggiunta di un impiegato
+        // AGGIUNTA DI UN IMPIEGATO
         addButton.addActionListener(e -> {
-            AddImpiegato addImpiegato = new AddImpiegato(controller, frame);
-            addImpiegato.frame.addWindowListener(new WindowAdapter() {
+            AddImpiegatoGUI addImpiegatoGUI = new AddImpiegatoGUI(controller, frame);
+            addImpiegatoGUI.frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
@@ -126,7 +130,7 @@ public class ImpiegatoGUI {
             });
         });
 
-        // settaggio del bottone per l'eliminazione di un impiegato
+        // ELIMINAZIONE DI UN IMPIEGATO
         removeButton.addActionListener(e -> {
             String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
 
@@ -143,10 +147,35 @@ public class ImpiegatoGUI {
             }
         });
 
-        // settaggio del bottone per visualizzare il profilo
+        // VISUALIZZAZIONE DEL PROFILO DI UN IMPIEGATO
         profButton.addActionListener(e -> {
             String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
             new ProfiloImpiegatoGUI(controller, frame, cfSelezionato);
+        });
+
+        // PROMOZIONE DI UN IMPIEGATO
+        promuoviButton.addActionListener(e -> {
+            int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler promuovere il seguente impiegato?", "Conferma", JOptionPane.YES_NO_OPTION);
+
+            if (selezione == JOptionPane.YES_OPTION) {
+                String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
+                boolean trovato = false;
+
+                try {
+                    for (String s : controller.getListaSenior()) {
+                        if (s.equals(cfSelezionato)) {
+                            trovato = true;
+                            new PromuoviGUI(controller, frame, cfSelezionato);
+                        }
+                    }
+
+                    if (!trovato)
+                        controller.promuovi(cfSelezionato, null);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            loadTable(controller, colonne);
         });
     }
 

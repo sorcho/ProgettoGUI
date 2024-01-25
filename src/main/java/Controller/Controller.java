@@ -1,11 +1,7 @@
 package Controller;
 
-import DAO.GestionaleDAO;
-import DAO.ImpiegatoDAO;
-import DAO.LaboratorioDAO;
-import ImplementazionePostgresDAO.ImplementazioneGestionaleDAO;
-import ImplementazionePostgresDAO.ImplementazioneImpiegatoDAO;
-import ImplementazionePostgresDAO.ImplementazioneLaboratorioDAO;
+import DAO.*;
+import ImplementazionePostgresDAO.*;
 import Model.*;
 
 import java.sql.Array;
@@ -123,7 +119,7 @@ public class Controller {
         }
     }
 
-    private void getProgettiDatabase(){
+    private void getProgettiDatabase() {
         GestionaleDAO gestionale = new ImplementazioneGestionaleDAO();
 
         ArrayList<String> listaCUP = new ArrayList<>();
@@ -145,7 +141,7 @@ public class Controller {
         }
     }
 
-    private void getAttrezzatureDatabase(){
+    private void getAttrezzatureDatabase() {
         GestionaleDAO gestionale = new ImplementazioneGestionaleDAO();
 
         ArrayList<String> listaSeriale = new ArrayList<>();
@@ -295,6 +291,33 @@ public class Controller {
         return listaRespSci;
     }
 
+    public ArrayList<String> getListaRefSci() {
+        ArrayList<String> listaRefSci = new ArrayList<>();
+
+        for (Progetto p : listaProgetti)
+            listaRefSci.add(p.getRefSci());
+
+        return listaRefSci;
+    }
+
+    public ArrayList<String> getListaResponsabili() {
+        ArrayList<String> listaResponsabili = new ArrayList<>();
+
+        for (Progetto p : listaProgetti)
+            listaResponsabili.add(p.getResp());
+
+        return listaResponsabili;
+    }
+
+    public ArrayList<Float> getListaBudget() {
+        ArrayList<Float> listaBudget = new ArrayList<>();
+
+        for (Progetto p : listaProgetti)
+            listaBudget.add(p.getBudget());
+
+        return listaBudget;
+    }
+
     public ArrayList<String> getListaTopic() {
         ArrayList<String> listaTopic = new ArrayList<>();
 
@@ -322,7 +345,7 @@ public class Controller {
         return listaProgetti;
     }
 
-    public ArrayList<String> getListaSenior () {
+    public ArrayList<String> getListaSenior() {
         ArrayList<String> listaSenior = new ArrayList<>();
 
         for (Impiegato i : listaImpiegati) {
@@ -333,11 +356,11 @@ public class Controller {
         return listaSenior;
     }
 
-    public ArrayList<String> getListaDirigenti (){
+    public ArrayList<String> getListaDirigenti() {
         ArrayList<String> listaDirigenti = new ArrayList<>();
 
-        for (Impiegato i : listaImpiegati){
-            if (Objects.equals(i.getCategoria(), "senior")) {
+        for (Impiegato i : listaImpiegati) {
+            if (Objects.equals(i.getCategoria(), "dirigente")) {
                 listaDirigenti.add(i.getCf());
             }
         }
@@ -345,15 +368,22 @@ public class Controller {
         return listaDirigenti;
     }
 
-    public ArrayList<String> getCupProgetti(){
+    public ArrayList<String> getCupProgetti() {
         ArrayList<String> listaCupProgetti = new ArrayList<>();
 
-        listaCupProgetti.add(null);
-
-        for(Progetto p : listaProgetti)
+        for (Progetto p : listaProgetti)
             listaCupProgetti.add(p.getCup());
 
         return listaCupProgetti;
+    }
+
+    public ArrayList<String> getListaNomiProgetti() {
+        ArrayList<String> listaNomiProgetti = new ArrayList<>();
+
+        for (Progetto p : listaProgetti)
+            listaNomiProgetti.add(p.getNome());
+
+        return listaNomiProgetti;
     }
 
     public void aggiungiLaboratorio(String nome, String respSci, String topic) throws SQLException {
@@ -374,8 +404,115 @@ public class Controller {
         getLaboratoriDatabase();
     }
 
-    public void associaLaboratorioProgetto(){
+    public void associaProgettoLaboratorio(String cup, String laboratorio) throws SQLException {
+        ProgettoDAO progettoDAO = new ImplementazioneProgettoDAO();
+        progettoDAO.collegaLaboratorio(laboratorio, cup);
 
+        for (Laboratorio l : listaLaboratori) {
+            if (l.getNome().equals(laboratorio))
+                l.setProgetto(cup);
+        }
+    }
 
+    public ArrayList<String> getListaAfferentiLaboratorio(String laboratorio) {
+        GestionaleDAO gestionaleDAO = new ImplementazioneGestionaleDAO();
+        ArrayList<String> listaAfferenti = new ArrayList<>();
+
+        gestionaleDAO.getListaAfferenti(laboratorio, listaAfferenti);
+
+        for (Laboratorio l : listaLaboratori) {
+            if (l.getNome().equals(laboratorio))
+                l.setListaAfferenti(listaAfferenti);
+        }
+
+        return listaAfferenti;
+    }
+
+    public void promuovi(String cf, String promotore) throws SQLException {
+        ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
+
+        impiegatoDAO.promuoviImpiegato(cf, promotore);
+        listaImpiegati.clear();
+        getImpiegatiDatabase();
+    }
+
+    public void aggiungiAfferente(String cf, String laboratorio) throws SQLException {
+        LaboratorioDAO laboratorioDAO = new ImplementazioneLaboratorioDAO();
+        laboratorioDAO.aggiungiAfferente(cf, laboratorio);
+
+        for (Laboratorio l : listaLaboratori) {
+            if (l.getNome().equals(laboratorio)) {
+                l.addAfferente(cf);
+            }
+        }
+    }
+
+    public void aggiungiProgetto(String cup, String nome, String refSci, String resp) throws SQLException {
+        ProgettoDAO progettoDAO = new ImplementazioneProgettoDAO();
+        progettoDAO.aggiungiProgetto(cup, refSci, resp, nome);
+
+        listaProgetti.clear();
+        getProgettiDatabase();
+    }
+
+    public void rimuoviProgetto(String cup) throws SQLException {
+        ProgettoDAO progettoDAO = new ImplementazioneProgettoDAO();
+
+        progettoDAO.eliminaProgetto(cup);
+
+        listaProgetti.removeIf(p -> p.getCup().equals(cup));
+    }
+
+    public ArrayList<String> getSerialiAttrezzature() {
+        ArrayList<String> listaSeriali = new ArrayList<>();
+
+        for (Attrezzatura a : listaAttrezzature)
+            listaSeriali.add(a.getSeriale());
+
+        return listaSeriali;
+    }
+
+    public ArrayList<String> getListaTipiAttrezzature() {
+        ArrayList<String> listaTipi = new ArrayList<>();
+
+        for (Attrezzatura a : listaAttrezzature)
+            listaTipi.add(a.getTipo());
+
+        return listaTipi;
+    }
+
+    public ArrayList<Float> getListaCostiAttrezzature() {
+        ArrayList<Float> listaCosti = new ArrayList<>();
+
+        for (Attrezzatura a : listaAttrezzature)
+            listaCosti.add(a.getCosto());
+
+        return listaCosti;
+    }
+
+    public void acquistaAttrezzatura(String seriale, String nomeLab) throws SQLException {
+        LaboratorioDAO laboratorioDAO = new ImplementazioneLaboratorioDAO();
+
+        laboratorioDAO.acquistaAttrezzatura(seriale, nomeLab);
+
+        listaAttrezzature.clear();
+        getAttrezzatureDatabase();
+    }
+
+    public void aggiungiAttrezzatura(String seriale, String tipo) throws SQLException {
+        AttrezzaturaDAO attrezzaturaDAO = new ImplementazioneAttrezzaturaDAO();
+
+        attrezzaturaDAO.aggiungiAttrezzatura(seriale, tipo);
+
+        listaAttrezzature.clear();
+        getAttrezzatureDatabase();
+    }
+
+    public Attrezzatura getDatiAttrezzatura(String seriale) {
+        for (Attrezzatura a : listaAttrezzature)
+            if (a.getSeriale().equals(seriale))
+                return a;
+
+        return null;
     }
 }
