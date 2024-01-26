@@ -1,10 +1,9 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -18,13 +17,13 @@ public class AddLaboratorioGUI {
     private JTextField topicTextField;
     private JLabel topicLabel;
     private JPanel buttonsPanel;
-    private JButton annullaButton;
-    private JButton okButton;
+    private JButton cancelBtn;
+    private JButton okBtn;
     private JComboBox seniorComboBox;
     private JComboBox cupComboBox;
     protected JFrame frame;
 
-    public AddLaboratorioGUI(Controller controller, JFrame frameChiamante) {
+    public AddLaboratorioGUI(@NotNull Controller controller) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Aggiungi Laboratorio");
@@ -44,7 +43,7 @@ public class AddLaboratorioGUI {
 
         // SETTO TUTTI GLI ACTION LISTENER PER I PULSANTI
 
-        okButton.addActionListener(e -> {
+        okBtn.addActionListener(e -> {
             int risposta = JOptionPane.showConfirmDialog(null, "Vuoi aggiungere questo Laboratorio?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (risposta == JOptionPane.YES_OPTION) {
@@ -62,8 +61,6 @@ public class AddLaboratorioGUI {
             }
         });
 
-        annullaButton.addActionListener(e -> {
-            frame.dispose();
-        });
+        cancelBtn.addActionListener(e -> frame.dispose());
     }
 }

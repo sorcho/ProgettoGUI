@@ -2,6 +2,7 @@ package GUI;
 
 import Controller.Controller;
 import Model.Impiegato;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +35,9 @@ public class ProfiloImpiegatoGUI {
     private JLabel imgLabel;
     private JFrame frame;
 
-    public ProfiloImpiegatoGUI(Controller controller, JFrame frameChiamante, String cfChiamante) {
+    public ProfiloImpiegatoGUI(@NotNull Controller controller, String cfChiamante) {
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Profilo Utente");
         frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
@@ -43,8 +46,12 @@ public class ProfiloImpiegatoGUI {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
+        // IMPOSTO IL MODEL DELLA LISTA
+
         labList.setModel(new DefaultListModel());
         DefaultListModel dfl = (DefaultListModel) labList.getModel();
+
+        // POPOLO LA TABELA CON I DATI DELLE VARIE PROMOZIONI
 
         DefaultListCellRenderer renderer =
                 (DefaultListCellRenderer) labList.getCellRenderer();
@@ -90,6 +97,8 @@ public class ProfiloImpiegatoGUI {
         promTable.getColumnModel().getColumn(2).setMaxWidth(200);
         promTable.getColumnModel().getColumn(3).setMaxWidth(200);
 
+        // MOSTRO IL PROFILO TRAMITE I VARI LABEL
+
         nomeLabel.setText(nomeLabel.getText() + i.getNome());
         cognomeLabel.setText(cognomeLabel.getText() + i.getCognome());
         dataNascLabel.setText(dataNascLabel.getText() + i.getDataNascita());
@@ -103,6 +112,8 @@ public class ProfiloImpiegatoGUI {
             dataScadLabel.setText(dataScadLabel.getText() + i.getDataScadenza());
         else
             dataScadLabel.setVisible(false);
+
+        // POPOLO LA LISTA DEI LABORATORI AI QUALI L'IMPIEGATO LAVORA
 
         String[] arrayLaboratori = i.getListaLaboratori().toArray(new String[0]);
 

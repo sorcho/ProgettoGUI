@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,12 +15,12 @@ public class AddAfferenteGUI {
     private JPanel buttonsPanel;
     private JLabel titleLabel;
     private JScrollPane listScrollPane;
-    private JButton annullaButton;
-    private JButton okButton;
+    private JButton cancelBtn;
+    private JButton okBtn;
     private JTable impTable;
     JFrame frame;
 
-    public AddAfferenteGUI(Controller controller, JFrame frameChiamante, String laboratorioSelezionato) {
+    public AddAfferenteGUI(@NotNull Controller controller, String laboratorioSelezionato) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Lista Impiegati");
@@ -66,11 +67,9 @@ public class AddAfferenteGUI {
 
         // SETTO TUTTI GLI ACTION LISTENER PER I PULSANTI
 
-        annullaButton.addActionListener(e -> {
-            frame.dispose();
-        });
+        cancelBtn.addActionListener(e -> frame.dispose());
 
-        okButton.addActionListener(e -> {
+        okBtn.addActionListener(e -> {
             int risposta = JOptionPane.showConfirmDialog(null, "Confermi di voler assumere questo impiegato?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (risposta == JOptionPane.YES_OPTION) {

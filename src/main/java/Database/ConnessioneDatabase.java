@@ -7,12 +7,12 @@ import java.sql.SQLException;
 public class ConnessioneDatabase {
     private static ConnessioneDatabase instance;
     public Connection connection;
-    private String url = "jdbc:postgresql://ep-muddy-feather-41247684.eu-central-1.aws.neon.tech/progetto";
-    private String user = "sorcho";
-    private String password = "OsDunIv40EUm";
 
-    private ConnessioneDatabase() throws SQLException {
+    private ConnessioneDatabase() {
         try {
+            String url = "jdbc:postgresql://ep-muddy-feather-41247684.eu-central-1.aws.neon.tech/progetto";
+            String user = "sorcho";
+            String password = "OsDunIv40EUm";
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             System.out.println("Errore: " + e.getMessage());

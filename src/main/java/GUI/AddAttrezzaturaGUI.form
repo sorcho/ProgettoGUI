@@ -64,7 +64,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="12320" class="javax.swing.JButton" binding="annullaButton">
+          <component id="12320" class="javax.swing.JButton" binding="cancelBtn">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>
@@ -77,7 +77,7 @@
               <text value="ANNULLA"/>
             </properties>
           </component>
-          <component id="d7911" class="javax.swing.JButton" binding="okButton">
+          <component id="d7911" class="javax.swing.JButton" binding="okBtn">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>

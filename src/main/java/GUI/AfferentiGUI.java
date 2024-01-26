@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class AfferentiGUI {
     private JScrollPane listScrollPanel;
     private JFrame frame;
 
-    public AfferentiGUI (Controller controller, JFrame frameChiamante, String nomeLab) {
+    public AfferentiGUI (@NotNull Controller controller, String nomeLab) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Lista Afferenti");

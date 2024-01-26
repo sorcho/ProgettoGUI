@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -22,15 +23,15 @@ public class ImpiegatoGUI {
     private JPanel listPanel;
     private JScrollPane tableScrollPane;
     private JTable impTable;
-    private JButton homeButton;
+    private JButton homeBtn;
     private JButton addButton;
-    private JButton removeButton;
-    private JButton profButton;
+    private JButton removeBtn;
+    private JButton profileBtn;
     private JList labList;
     private JLabel labLabel;
-    private JButton promuoviButton;
+    private JButton promuoviBtn;
 
-    public ImpiegatoGUI(Controller controller, JFrame frameChiamante) {
+    public ImpiegatoGUI(@NotNull Controller controller, JFrame frameChiamante) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Impiegati");
@@ -41,7 +42,8 @@ public class ImpiegatoGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        // Settaggio della lista dei laboratori associati a un impiegato
+        // IMPOSTO LA VISUALIZZAZIONE DELLA LISTA
+
         labList.setModel(new DefaultListModel());
         DefaultListModel dfl = (DefaultListModel) labList.getModel();
 
@@ -120,15 +122,13 @@ public class ImpiegatoGUI {
 
         // SETTO TUTTI GLI ACTION LISTENER PER I PULSANTI
 
-        // RITORNO ALLA HOME
-        homeButton.addActionListener(e -> {
+        homeBtn.addActionListener(e -> {
             frameChiamante.setVisible(true);
             frame.dispose();
         });
 
-        // AGGIUNTA DI UN IMPIEGATO
         addButton.addActionListener(e -> {
-            AddImpiegatoGUI addImpiegatoGUI = new AddImpiegatoGUI(controller, frame);
+            AddImpiegatoGUI addImpiegatoGUI = new AddImpiegatoGUI(controller);
             addImpiegatoGUI.frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
@@ -138,8 +138,7 @@ public class ImpiegatoGUI {
             });
         });
 
-        // ELIMINAZIONE DI UN IMPIEGATO
-        removeButton.addActionListener(e -> {
+        removeBtn.addActionListener(e -> {
             String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
 
             int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler licenziare l'impiegato?", "Conferma", JOptionPane.YES_NO_OPTION);
@@ -147,23 +146,20 @@ public class ImpiegatoGUI {
                 try {
                     controller.rimuoviImpiegato(cfSelezionato);
                     JOptionPane.showMessageDialog(null, "Eliminazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    loadTable(controller, colonne);
+                    resizeWidthTable(impTable);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-
-                loadTable(controller, colonne);
-                resizeWidthTable(impTable);
             }
         });
 
-        // VISUALIZZAZIONE DEL PROFILO DI UN IMPIEGATO
-        profButton.addActionListener(e -> {
+        profileBtn.addActionListener(e -> {
             String cfSelezionato = impTable.getValueAt(impTable.getSelectedRow(), 0).toString();
-            new ProfiloImpiegatoGUI(controller, frame, cfSelezionato);
+            new ProfiloImpiegatoGUI(controller, cfSelezionato);
         });
 
-        // PROMOZIONE DI UN IMPIEGATO
-        promuoviButton.addActionListener(e -> {
+        promuoviBtn.addActionListener(e -> {
             int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler promuovere il seguente impiegato?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (selezione == JOptionPane.YES_OPTION) {
@@ -174,22 +170,22 @@ public class ImpiegatoGUI {
                     for (String s : controller.getListaSenior()) {
                         if (s.equals(cfSelezionato)) {
                             trovato = true;
-                            new PromuoviGUI(controller, frame, cfSelezionato);
+                            new PromuoviGUI(controller, cfSelezionato);
                         }
                     }
 
                     if (!trovato)
                         controller.promuovi(cfSelezionato, null);
+                    loadTable(controller, colonne);
+                    resizeWidthTable(impTable);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            loadTable(controller, colonne);
-            resizeWidthTable(impTable);
         });
     }
 
-    private void loadTable(Controller controller, String[] colonne) {
+    private void loadTable(@NotNull Controller controller, @NotNull String[] colonne) {
         ArrayList<String> listaCF = controller.getListaCF();
         ArrayList<String> listaNomi = controller.getListaNomi();
         ArrayList<String> listaCognomi = controller.getListaCognomi();
