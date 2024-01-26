@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -20,9 +21,10 @@ public class PromuoviGUI {
     public PromuoviGUI(Controller controller, JFrame frameChiamante, String cfSelezionato) {
         frame = new JFrame("Promuovi Senior");
         frame.setContentPane(promMainPanel);
+        frame.setSize(new Dimension(300,350));
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.pack();
         frame.setVisible(true);
 
         annullaButton.addActionListener(e -> {

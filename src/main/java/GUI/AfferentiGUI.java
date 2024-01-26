@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class AfferentiGUI {
@@ -17,14 +18,13 @@ public class AfferentiGUI {
 
         frame = new JFrame("Lista Afferenti");
         frame.setContentPane(affMainPanel);
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
+        frame.setSize(new Dimension(320,350));
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         // POPOLO LA LISTA DEGLI AFFERENTI
-
-        afferentiList.setEnabled(false);
 
         afferentiList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         DefaultListCellRenderer renderer =

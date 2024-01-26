@@ -4,6 +4,7 @@ import Controller.Controller;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -28,7 +29,8 @@ public class LaboratoriGUI {
         frame = new JFrame("Laboratori");
         frame.setContentPane(labMainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 700);
+        frame.setSize(1500, 700);
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -41,9 +43,9 @@ public class LaboratoriGUI {
         ArrayList<String> listaRespSci = controller.getListaRespSci();
         ArrayList<String> listaTopic = controller.getListaTopic();
         ArrayList<Integer> listaNAfferenti = controller.getListaNAfferenti();
-        ArrayList<String> listaProgetti = controller.getListaProgetti();
+        ArrayList<String> listaProgetti = controller.getListaProgettiAssociati();
 
-        String[] colonne = {"Nome", "Responsabile Scientifico", "Topic", "Numero Afferenti", "Progetto Associato"};
+        String[] colonne = {"Nome", "Responsabile Scientifico", "Topic", "Afferenti", "Progetto Associato"};
         Object[][] righe = new Object[listaNomiLaboratori.size()][5];
 
         for (int i = 0; i < listaNomiLaboratori.size(); i++) {
@@ -54,8 +56,24 @@ public class LaboratoriGUI {
             righe[i][4] = listaProgetti.get(i);
         }
 
-        labTable.setModel(new DefaultTableModel(righe, colonne));
+        DefaultTableModel tableModel = new DefaultTableModel(righe, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        labTable.setModel(tableModel);
         labTable.setRowHeight(30);
+        labTable.setFont(new Font("JetBrains Mono", Font.PLAIN, 16)); //setta il font delle celle della tabella
+
+        labTable.getTableHeader().setReorderingAllowed(false); //fa in modo che le colonne non si spostino
+        labTable.getTableHeader().setResizingAllowed(false); //fa in modo che la dimensione delle colenne non sia personalizzabile dall'utente
+
+        resizeWidthTable(labTable); //serve per settare la larghezza delle colonne
+
+        Font headerFont = new Font("JetBrains Mono", Font.BOLD, 16);
+        labTable.getTableHeader().setFont(headerFont);
 
         addButton.addActionListener(e -> {
             AddLaboratorioGUI addLaboratorioGUI = new AddLaboratorioGUI(controller, frame);
@@ -64,6 +82,7 @@ public class LaboratoriGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(labTable);
                 }
             });
         });
@@ -81,6 +100,7 @@ public class LaboratoriGUI {
                 }
 
                 loadTable(controller, colonne);
+                resizeWidthTable(labTable);
             }
         });
 
@@ -92,6 +112,7 @@ public class LaboratoriGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(labTable);
                 }
             });
         });
@@ -109,6 +130,7 @@ public class LaboratoriGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(labTable);
                 }
             });
         });
@@ -125,7 +147,7 @@ public class LaboratoriGUI {
         ArrayList<String> listaRespSci = controller.getListaRespSci();
         ArrayList<String> listaTopic = controller.getListaTopic();
         ArrayList<Integer> listaNAfferenti = controller.getListaNAfferenti();
-        ArrayList<String> listaProgetti = controller.getListaProgetti();
+        ArrayList<String> listaProgetti = controller.getListaProgettiAssociati();
 
         Object[][] righe = new Object[listaNomiLaboratori.size()][5];
 
@@ -139,5 +161,25 @@ public class LaboratoriGUI {
 
         DefaultTableModel dtm = (DefaultTableModel) labTable.getModel();
         dtm.setDataVector(righe, colonne);
+    }
+
+    private void resizeWidthTable(JTable table) {
+        table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(250);
+        table.getColumnModel().getColumn(2).setPreferredWidth(300);
+        table.getColumnModel().getColumn(3).setPreferredWidth(120);
+        table.getColumnModel().getColumn(4).setPreferredWidth(200);
+
+        table.getColumnModel().getColumn(0).setMinWidth(100);
+        table.getColumnModel().getColumn(1).setMinWidth(250);
+        table.getColumnModel().getColumn(2).setMinWidth(300);
+        table.getColumnModel().getColumn(3).setMinWidth(150);
+        table.getColumnModel().getColumn(4).setMinWidth(200);
+
+        table.getColumnModel().getColumn(0).setMaxWidth(100);
+        table.getColumnModel().getColumn(1).setMaxWidth(250);
+        table.getColumnModel().getColumn(2).setMaxWidth(300);
+        table.getColumnModel().getColumn(3).setMaxWidth(150);
+        table.getColumnModel().getColumn(4).setMaxWidth(200);
     }
 }

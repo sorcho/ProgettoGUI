@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLException;
 
 public class AddAttrezzaturaGUI {
@@ -12,7 +13,6 @@ public class AddAttrezzaturaGUI {
     private JLabel serialeLabel;
     private JTextField tipoTextField;
     private JLabel tipoLabel;
-    private JLabel titleLable;
     private JPanel buttonsPanel;
     private JButton annullaButton;
     private JButton okButton;
@@ -21,9 +21,10 @@ public class AddAttrezzaturaGUI {
     public AddAttrezzaturaGUI(Controller controller, JFrame frameChiamante) {
         frame = new JFrame("Inserisci Attrezzatura");
         frame.setContentPane(addAttMainPanel);
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
+        frame.setResizable(false);
+        frame.setSize(new Dimension(300,200));
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         annullaButton.addActionListener(e -> {

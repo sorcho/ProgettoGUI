@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,9 +29,10 @@ public class AddProgettoGUI {
 
         frame = new JFrame("Progetti");
         frame.setContentPane(addProgMainPanel);
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.pack();
+        frame.setResizable(false);
+        frame.setSize(new Dimension(500,280));
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         // POPOLO LA LISTA DEGLI IMPIEGATI SENIOR

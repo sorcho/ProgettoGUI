@@ -5,6 +5,7 @@ import Model.Impiegato;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 public class ProfiloImpiegatoGUI {
 
@@ -13,15 +14,13 @@ public class ProfiloImpiegatoGUI {
     private JPanel infCarPanel;
     private JPanel infPersPanel;
     private JPanel datiPanel;
-    private JPanel imgPanel;
     private JLabel nomeLabel;
     private JLabel cognomeLabel;
     private JLabel dataNascLabel;
     private JLabel etaLabel;
-    private JLabel imgLabel;
     private JLabel infCarLabel;
     private JLabel intContrlabel;
-    private JLabel intPersPanel;
+    private JLabel intPersLabel;
     private JList labList;
     private JScrollPane tableScrollPne;
     private JTable promTable;
@@ -30,18 +29,26 @@ public class ProfiloImpiegatoGUI {
     private JLabel salarioLabel;
     private JLabel contrattoLabel;
     private JLabel dataScadLabel;
+    private JLabel labLabel;
+    private JPanel infContrDatiPanel;
+    private JLabel imgLabel;
     private JFrame frame;
 
     public ProfiloImpiegatoGUI(Controller controller, JFrame frameChiamante, String cfChiamante) {
-        JFrame frame = new JFrame("Profilo Utente");
-        frame.setSize(500, 700);
+        frame = new JFrame("Profilo Utente");
+        frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.setContentPane(profiloMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
         labList.setModel(new DefaultListModel());
         DefaultListModel dfl = (DefaultListModel) labList.getModel();
+
+        DefaultListCellRenderer renderer =
+                (DefaultListCellRenderer) labList.getCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
 
         Impiegato i = controller.getDatiProfilo(cfChiamante);
 
@@ -59,6 +66,29 @@ public class ProfiloImpiegatoGUI {
         promTable.setModel(new DefaultTableModel(righe, colonne));
         promTable.setRowHeight(30);
         promTable.setEnabled(false);
+
+        promTable.setFont(new Font("JetBrains Mono", Font.PLAIN, 16)); //setta il font delle celle della tabella
+        Font headerFont = new Font("JetBrains Mono", Font.BOLD, 16);
+        promTable.getTableHeader().setFont(headerFont);
+
+        promTable.getTableHeader().setReorderingAllowed(false); //fa in modo che le colonne non si spostino
+        promTable.getTableHeader().setResizingAllowed(false); //fa in modo che la dimensione delle colenne non sia personalizzabile dall'utente
+
+        //questa parte di codice serve per cambiare la larghezza delle celle della tabella
+        promTable.getColumnModel().getColumn(0).setMinWidth(200);
+        promTable.getColumnModel().getColumn(1).setMinWidth(200);
+        promTable.getColumnModel().getColumn(2).setMinWidth(200);
+        promTable.getColumnModel().getColumn(3).setMinWidth(200);
+
+        promTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+        promTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        promTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+        promTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+
+        promTable.getColumnModel().getColumn(0).setMaxWidth(200);
+        promTable.getColumnModel().getColumn(1).setMaxWidth(200);
+        promTable.getColumnModel().getColumn(2).setMaxWidth(200);
+        promTable.getColumnModel().getColumn(3).setMaxWidth(200);
 
         nomeLabel.setText(nomeLabel.getText() + i.getNome());
         cognomeLabel.setText(cognomeLabel.getText() + i.getCognome());
