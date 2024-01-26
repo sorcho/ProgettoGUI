@@ -21,7 +21,7 @@ public class AttrezzaturaGUI {
     private JButton profileBtn;
     private JScrollPane tableScrollPane;
     private JTable attTable;
-    private JFrame frame;
+    private final JFrame frame;
 
     public AttrezzaturaGUI(@NotNull Controller controller, JFrame frameChiamante) {
         // IMPOSTO IL FRAME
@@ -62,7 +62,6 @@ public class AttrezzaturaGUI {
 
         // IMPOSTO TUTTI GLI ACTION LISTENER
 
-        homeBtn.addActionListener(e -> {
         attTable.getTableHeader().setReorderingAllowed(false); //fa in modo che le colonne non si spostino
         attTable.getTableHeader().setResizingAllowed(false); //fa in modo che la dimensione delle colenne non sia personalizzabile dall'utente
 
