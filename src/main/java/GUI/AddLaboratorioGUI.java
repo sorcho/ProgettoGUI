@@ -4,6 +4,7 @@ import Controller.Controller;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -29,7 +30,8 @@ public class AddLaboratorioGUI {
         frame = new JFrame("Aggiungi Laboratorio");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setContentPane(addLabMainPanel);
-        frame.pack();
+        frame.setResizable(false);
+        frame.setSize(new Dimension(500,280));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 

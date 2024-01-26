@@ -31,7 +31,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="JetBrains Mono" size="24" style="0"/>
+              <font name="JetBrains Mono" size="20" style="0"/>
               <text value="CUP:"/>
             </properties>
           </component>
@@ -40,7 +40,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="JetBrains Mono" size="24" style="0"/>
+              <font name="JetBrains Mono" size="20" style="0"/>
               <text value="Referente Scientifico:"/>
             </properties>
           </component>
@@ -55,7 +55,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="JetBrains Mono" size="24" style="0"/>
+              <font name="JetBrains Mono" size="20" style="0"/>
               <text value="Nome:"/>
             </properties>
           </component>
@@ -74,7 +74,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <font name="JetBrains Mono" size="24" style="0"/>
+              <font name="JetBrains Mono" size="20" style="0"/>
               <text value="Responsabile:"/>
             </properties>
           </component>
@@ -104,7 +104,7 @@
             </constraints>
             <properties>
               <enabled value="true"/>
-              <font name="JetBrains Mono" size="20" style="1"/>
+              <font name="JetBrains Mono" size="18" style="1"/>
               <text value="ANNULLA"/>
             </properties>
           </component>
@@ -118,7 +118,7 @@
             </constraints>
             <properties>
               <enabled value="true"/>
-              <font name="JetBrains Mono" size="20" style="1"/>
+              <font name="JetBrains Mono" size="18" style="1"/>
               <text value="OK"/>
             </properties>
           </component>

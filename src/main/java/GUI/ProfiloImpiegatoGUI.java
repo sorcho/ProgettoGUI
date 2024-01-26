@@ -90,7 +90,6 @@ public class ProfiloImpiegatoGUI {
         promTable.getColumnModel().getColumn(2).setMaxWidth(200);
         promTable.getColumnModel().getColumn(3).setMaxWidth(200);
 
-
         nomeLabel.setText(nomeLabel.getText() + i.getNome());
         cognomeLabel.setText(cognomeLabel.getText() + i.getCognome());
         dataNascLabel.setText(dataNascLabel.getText() + i.getDataNascita());

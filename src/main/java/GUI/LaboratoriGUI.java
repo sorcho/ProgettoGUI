@@ -45,7 +45,7 @@ public class LaboratoriGUI {
         ArrayList<Integer> listaNAfferenti = controller.getListaNAfferenti();
         ArrayList<String> listaProgetti = controller.getListaProgettiAssociati();
 
-        String[] colonne = {"Nome", "Responsabile Scientifico", "Topic", "Numero Afferenti", "Progetto Associato"};
+        String[] colonne = {"Nome", "Responsabile Scientifico", "Topic", "Afferenti", "Progetto Associato"};
         Object[][] righe = new Object[listaNomiLaboratori.size()][5];
 
         for (int i = 0; i < listaNomiLaboratori.size(); i++) {
@@ -82,6 +82,7 @@ public class LaboratoriGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(labTable);
                 }
             });
         });
@@ -99,6 +100,7 @@ public class LaboratoriGUI {
                 }
 
                 loadTable(controller, colonne);
+                resizeWidthTable(labTable);
             }
         });
 
@@ -110,6 +112,7 @@ public class LaboratoriGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(labTable);
                 }
             });
         });
@@ -127,6 +130,7 @@ public class LaboratoriGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(labTable);
                 }
             });
         });

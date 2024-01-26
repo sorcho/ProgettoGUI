@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -40,12 +41,11 @@ public class AddImpiegatoGUI {
     public AddImpiegatoGUI(Controller controller, JFrame frameChiamante) {
         // Inizializzazione e settaggio del frame principale
         frame = new JFrame("Impiegati");
-        frame.setLocationRelativeTo(null);
         frame.setContentPane(addImpMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(new Dimension(500,480));
         frame.setResizable(false);
-        frame.pack();
-        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         bg.add(indRadioButton);

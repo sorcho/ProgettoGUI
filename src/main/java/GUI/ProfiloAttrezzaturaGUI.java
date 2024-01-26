@@ -4,6 +4,7 @@ import Controller.Controller;
 import Model.Attrezzatura;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ProfiloAttrezzaturaGUI {
     private JPanel profAttMainPanel;
@@ -19,8 +20,9 @@ public class ProfiloAttrezzaturaGUI {
         frame = new JFrame("Profilo Attrezzatura");
         frame.setContentPane(profAttMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(new Dimension(300,200));
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.pack();
         frame.setVisible(true);
 
         Attrezzatura a = controller.getDatiAttrezzatura(serialeSelezionato);

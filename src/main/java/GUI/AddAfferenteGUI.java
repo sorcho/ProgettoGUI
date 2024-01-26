@@ -4,6 +4,7 @@ import Controller.Controller;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -24,8 +25,9 @@ public class AddAfferenteGUI {
         frame = new JFrame("Lista Impiegati");
         frame.setContentPane(addAfferenteMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(new Dimension(700,600));
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.pack();
         frame.setVisible(true);
 
         // POPOLO LA TABELLA CHE CONTIENE GLI IMPIEGATI CHE POSSONO ESSERE ASSOCIATI AL LABORATORIO
@@ -52,8 +54,15 @@ public class AddAfferenteGUI {
             }
         };
 
-        impTable.setModel(tableModel);
+        impTable.setFont(new Font("JetBrains Mono", Font.PLAIN, 16)); //setta il font delle celle della tabella
         impTable.setRowHeight(30);
+        impTable.setModel(tableModel);
+
+        impTable.getTableHeader().setReorderingAllowed(false); //fa in modo che le colonne non si spostino
+        impTable.getTableHeader().setResizingAllowed(false); //fa in modo che la dimensione delle colenne non sia personalizzabile dall'utente
+
+        Font headerFont = new Font("JetBrains Mono", Font.BOLD, 16);
+        impTable.getTableHeader().setFont(headerFont);
 
         // SETTO TUTTI GLI ACTION LISTENER PER I PULSANTI
 

@@ -4,6 +4,7 @@ import Controller.Controller;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -24,9 +25,10 @@ public class AttrezzaturaGUI {
     public AttrezzaturaGUI(Controller controller, JFrame frameChiamante) {
         frame = new JFrame("Attrezzatura");
         frame.setContentPane(attMainPanel);
+        frame.setSize(800, 700);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.pack();
         frame.setVisible(true);
 
         ArrayList<String> listaSeriali = controller.getSerialiAttrezzature();
@@ -42,8 +44,24 @@ public class AttrezzaturaGUI {
             righe[i][2] = listaCosti.get(i) + "€";
         }
 
-        attTable.setModel(new DefaultTableModel(righe, colonne));
+        DefaultTableModel tableModel = new DefaultTableModel(righe, colonne) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        attTable.setFont(new Font("JetBrains Mono", Font.PLAIN, 16)); //setta il font delle celle della tabella
+        attTable.setModel(tableModel);
         attTable.setRowHeight(30);
+
+        attTable.getTableHeader().setReorderingAllowed(false); //fa in modo che le colonne non si spostino
+        attTable.getTableHeader().setResizingAllowed(false); //fa in modo che la dimensione delle colenne non sia personalizzabile dall'utente
+
+        resizeWidthTable(attTable); //serve per settare la larghezza delle colonne
+
+        Font headerFont = new Font("JetBrains Mono", Font.BOLD, 16);
+        attTable.getTableHeader().setFont(headerFont);
 
         homeButton.addActionListener(e -> {
             frame.dispose();
@@ -64,7 +82,9 @@ public class AttrezzaturaGUI {
                 }
 
                 loadTable(controller, colonne);
+                resizeWidthTable(attTable);
             }
+
         });
 
         addButton.addActionListener(e -> {
@@ -74,6 +94,7 @@ public class AttrezzaturaGUI {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadTable(controller, colonne);
+                    resizeWidthTable(attTable);
                 }
             });
         });
@@ -100,5 +121,19 @@ public class AttrezzaturaGUI {
 
         DefaultTableModel dtm = (DefaultTableModel) attTable.getModel();
         dtm.setDataVector(righe, colonne);
+    }
+
+    private void resizeWidthTable(JTable table) {
+        table.getColumnModel().getColumn(0).setPreferredWidth(150);
+        table.getColumnModel().getColumn(1).setPreferredWidth(250);
+        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+
+        table.getColumnModel().getColumn(0).setMinWidth(150);
+        table.getColumnModel().getColumn(1).setMinWidth(250);
+        table.getColumnModel().getColumn(2).setMinWidth(100);
+
+        table.getColumnModel().getColumn(0).setMaxWidth(150);
+        table.getColumnModel().getColumn(1).setMaxWidth(250);
+        table.getColumnModel().getColumn(2).setMaxWidth(100);
     }
 }

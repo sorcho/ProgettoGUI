@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,8 +26,9 @@ public class SelezionaSerialeGUI {
         frame = new JFrame("Seleziona Seriale");
         frame.setContentPane(serialeMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(new Dimension(300,350));
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.pack();
         frame.setVisible(true);
 
         // POPOLO LA LISTA DEI SERIALI SELEZIONABILI

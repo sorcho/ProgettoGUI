@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -21,8 +22,9 @@ public class SelezionaCupGUI {
         frame = new JFrame("Seleziona CUP");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setContentPane(selCupMainPanel);
+        frame.setResizable(false);
+        frame.setSize(new Dimension(300,350));
         frame.setLocationRelativeTo(null);
-        frame.pack();
         frame.setVisible(true);
 
         cupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
