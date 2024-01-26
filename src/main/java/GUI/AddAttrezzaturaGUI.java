@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -14,11 +15,13 @@ public class AddAttrezzaturaGUI {
     private JLabel tipoLabel;
     private JLabel titleLable;
     private JPanel buttonsPanel;
-    private JButton annullaButton;
-    private JButton okButton;
+    private JButton cancelBtn;
+    private JButton okBtn;
     JFrame frame;
 
-    public AddAttrezzaturaGUI(Controller controller, JFrame frameChiamante) {
+    public AddAttrezzaturaGUI(@NotNull Controller controller) {
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Inserisci Attrezzatura");
         frame.setContentPane(addAttMainPanel);
         frame.setLocationRelativeTo(null);
@@ -26,11 +29,11 @@ public class AddAttrezzaturaGUI {
         frame.pack();
         frame.setVisible(true);
 
-        annullaButton.addActionListener(e -> {
-            frame.dispose();
-        });
+        // SETTO TUTTI GLI ACTION LISTENER PER I PULSANTI
 
-        okButton.addActionListener(e -> {
+        cancelBtn.addActionListener(e -> frame.dispose());
+
+        okBtn.addActionListener(e -> {
             int risposta = JOptionPane.showConfirmDialog(null, "Confermi di voler aggiungere questa Attrezzatura?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (risposta == JOptionPane.YES_OPTION) {

@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -15,15 +16,15 @@ public class AddProgettoGUI {
     private JLabel refSciLabel;
     private JComboBox seniorComboBox;
     private JPanel buttonsPanel;
-    private JButton annullaButton;
-    private JButton okButton;
+    private JButton cancelBtn;
+    private JButton okBtn;
     private JLabel nomeLabel;
     private JTextField nomeTextField;
     private JLabel respLabel;
     private JComboBox dirComboBox;
     private JFrame frame;
 
-    public AddProgettoGUI(Controller controller, JFrame frameChiamante) {
+    public AddProgettoGUI(@NotNull Controller controller) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Progetti");
@@ -49,7 +50,7 @@ public class AddProgettoGUI {
 
         // SETTO TUTTI GLI ACTION LISTENER PER I PULSANTI
 
-        okButton.addActionListener(e -> {
+        okBtn.addActionListener(e -> {
             int risposta = JOptionPane.showConfirmDialog(null, "Vuoi aggiungere questo Progetto?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (risposta == JOptionPane.YES_OPTION) {
@@ -59,7 +60,7 @@ public class AddProgettoGUI {
                 String respInserito = Objects.requireNonNull(dirComboBox.getSelectedItem()).toString();
 
                 try {
-                    controller.aggiungiProgetto(cupInserito,nomeInserito,refSciInserito,respInserito);
+                    controller.aggiungiProgetto(cupInserito, nomeInserito, refSciInserito, respInserito);
                     JOptionPane.showMessageDialog(null, "Progetto inserito con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
                 } catch (SQLException ex) {
@@ -68,8 +69,6 @@ public class AddProgettoGUI {
             }
         });
 
-        annullaButton.addActionListener(e -> {
-            frame.dispose();
-        });
+        cancelBtn.addActionListener(e -> frame.dispose());
     }
 }

@@ -2,7 +2,6 @@ package ImplementazionePostgresDAO;
 
 import DAO.ImpiegatoDAO;
 import Database.ConnessioneDatabase;
-import Model.Promozione;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class ImplementazioneImpiegatoDAO implements ImpiegatoDAO {
     }
 
     @Override
-    public boolean assumiImpiegato(String cf, String nome, String cognome, Date dataNascita, Date dataAssunzione, String categoria) throws SQLException {
+    public void assumiImpiegato(String cf, String nome, String cognome, Date dataNascita, Date dataAssunzione, String categoria) throws SQLException {
         CallableStatement query;
         query = connection.prepareCall("call add_impiegato(?, ?, ?, ?, ?, ?)");
         query.setString(1, cf);
@@ -28,11 +27,11 @@ public class ImplementazioneImpiegatoDAO implements ImpiegatoDAO {
         query.setDate(4, dataNascita);
         query.setDate(5, dataAssunzione);
         query.setString(6, categoria);
-        return query.execute();
+        query.execute();
     }
 
     @Override
-    public boolean assumiImpiegatoProgetto(String cf, String nome, String cognome, Date dataNascita, Date dataAssunzione, Date dataScadenza, String cup) throws SQLException {
+    public void assumiImpiegatoProgetto(String cf, String nome, String cognome, Date dataNascita, Date dataAssunzione, Date dataScadenza, String cup) throws SQLException {
         PreparedStatement query;
         query = connection.prepareCall("call add_impiegato_progetto(?, ?, ?, ?, ?, ?, ?)");
         query.setString(1, cf);
@@ -42,17 +41,15 @@ public class ImplementazioneImpiegatoDAO implements ImpiegatoDAO {
         query.setDate(5, dataAssunzione);
         query.setDate(6, dataScadenza);
         query.setString(7, cup);
-        int risultato = query.executeUpdate();
-        return risultato == 1;
+        query.executeUpdate();
     }
 
     @Override
-    public boolean licenziaImpiegato(String cf) throws SQLException {
+    public void licenziaImpiegato(String cf) throws SQLException {
         PreparedStatement query;
         query = connection.prepareCall("call delete_impiegato(?)");
         query.setString(1, cf);
-        int risultato = query.executeUpdate();
-        return risultato == 1;
+        query.executeUpdate();
     }
 
     @Override
@@ -66,13 +63,12 @@ public class ImplementazioneImpiegatoDAO implements ImpiegatoDAO {
     }
 
     @Override
-    public boolean promuoviImpiegato(String cf, String promotoreDirigente) throws SQLException {
+    public void promuoviImpiegato(String cf, String promotoreDirigente) throws SQLException {
         PreparedStatement query;
         query = connection.prepareCall("call add_promozione(?, ?)");
         query.setString(1, cf);
         query.setString(2, promotoreDirigente);
-        int risultato = query.executeUpdate();
-        return risultato == 1;
+        query.executeUpdate();
     }
 
     @Override
@@ -93,26 +89,4 @@ public class ImplementazioneImpiegatoDAO implements ImpiegatoDAO {
             return false;
         }
     }
-
-    @Override
-    public boolean getPromozioni(String cf, ArrayList<Promozione> listaPromozioni) {
-        try {
-            PreparedStatement query;
-
-            query = connection.prepareStatement("SELECT * from promozione where cf = ?");
-            query.setString(1, cf);
-
-            ResultSet rs = query.executeQuery();
-
-            while (rs.next()) {
-                listaPromozioni.add(new Promozione(rs.getDate("data_passaggio"), rs.getString("vecchia_categoria"), rs.getString("nuova_categoria"), rs.getString("promotore_dirigente"), cf));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
 }

@@ -158,7 +158,7 @@
               <text value="Tipo Contratto"/>
             </properties>
           </component>
-          <component id="af87a" class="javax.swing.JRadioButton" binding="indRadioButton">
+          <component id="af87a" class="javax.swing.JRadioButton" binding="indRadioBtn">
             <constraints>
               <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -168,7 +168,7 @@
               <text value="Indeterminato"/>
             </properties>
           </component>
-          <component id="f3ec9" class="javax.swing.JRadioButton" binding="progRadioButton">
+          <component id="f3ec9" class="javax.swing.JRadioButton" binding="progRadioBtn">
             <constraints>
               <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -207,7 +207,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="f787f" class="javax.swing.JButton" binding="annullaButton">
+          <component id="f787f" class="javax.swing.JButton" binding="cancelBtn">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>
@@ -221,7 +221,7 @@
               <text value="ANNULLA"/>
             </properties>
           </component>
-          <component id="5606c" class="javax.swing.JButton" binding="okButton">
+          <component id="5606c" class="javax.swing.JButton" binding="okBtn">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>

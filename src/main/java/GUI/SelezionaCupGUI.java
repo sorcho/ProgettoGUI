@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -17,7 +18,9 @@ public class SelezionaCupGUI {
     private JButton okButton;
     protected JFrame frame;
 
-    public SelezionaCupGUI(Controller controller, JFrame frameChiamante, String labSelezionato) {
+    public SelezionaCupGUI(@NotNull Controller controller, String labSelezionato) {
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Seleziona CUP");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setContentPane(selCupMainPanel);
@@ -25,14 +28,12 @@ public class SelezionaCupGUI {
         frame.pack();
         frame.setVisible(true);
 
+        // IMPOSTO LA LISTA DEI CUP E LA POPOLO
+
         cupList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         DefaultListCellRenderer renderer =
                 (DefaultListCellRenderer) cupList.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
-
-        annullaButton.addActionListener(e -> {
-            frame.dispose();
-        });
 
         ArrayList<String> listaCupProgetti = controller.getCupProgetti();
 
@@ -42,17 +43,20 @@ public class SelezionaCupGUI {
         for (String s : listaCupProgetti)
             dfl.addElement(s);
 
+        // IMPOSTO TUTTI GLI ACTION LISTENER
+
         okButton.addActionListener(e -> {
             String cupSelezionato = cupList.getSelectedValue().toString();
 
             try {
                 controller.associaProgettoLaboratorio(cupSelezionato, labSelezionato);
                 JOptionPane.showMessageDialog(null, "Associazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                frame.dispose();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
             }
-
-            frame.dispose();
         });
+
+        annullaButton.addActionListener(e -> frame.dispose());
     }
 }

@@ -22,7 +22,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="1f35b" class="javax.swing.JButton" binding="homeButton">
+          <component id="1f35b" class="javax.swing.JButton" binding="homeBtn">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>
@@ -48,7 +48,7 @@
               <text value="AGGIUNGI"/>
             </properties>
           </component>
-          <component id="8bc6f" class="javax.swing.JButton" binding="removeButton">
+          <component id="8bc6f" class="javax.swing.JButton" binding="removeBtn">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>
@@ -61,7 +61,7 @@
               <text value="ELIMINA"/>
             </properties>
           </component>
-          <component id="c7513" class="javax.swing.JButton" binding="profButton">
+          <component id="c7513" class="javax.swing.JButton" binding="profileBtn">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>
@@ -84,7 +84,7 @@
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <component id="4a967" class="javax.swing.JButton" binding="promuoviButton">
+          <component id="4a967" class="javax.swing.JButton" binding="promuoviBtn">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="0" height="0"/>

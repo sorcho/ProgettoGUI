@@ -2,6 +2,7 @@ package GUI;
 
 import Controller.Controller;
 import Model.Attrezzatura;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
@@ -15,13 +16,17 @@ public class ProfiloAttrezzaturaGUI {
     private JLabel costoLabel;
     private JFrame frame;
 
-    public ProfiloAttrezzaturaGUI(Controller controller, JFrame frameChiamante, String serialeSelezionato){
+    public ProfiloAttrezzaturaGUI(@NotNull Controller controller, String serialeSelezionato){
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Profilo Attrezzatura");
         frame.setContentPane(profAttMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
+
+        // MOSTRO TUTTI I DATI NEI VARI LABEL
 
         Attrezzatura a = controller.getDatiAttrezzatura(serialeSelezionato);
 

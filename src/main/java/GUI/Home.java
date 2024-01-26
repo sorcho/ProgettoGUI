@@ -3,21 +3,24 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Home {
     private JPanel mainPanel;
-    private JButton impiegatiButton;
-    private JButton laboratoriButton;
-    private JButton attrezzatureButton;
-    private JButton progettiButton;
+    private JButton impiegatiBtn;
+    private JButton laboratoriBtn;
+    private JButton attrezzatureBtn;
+    private JButton progettiBtn;
     private JLabel titleLabel;
     private JPanel titlePanel;
     private JPanel buttonsPPanel;
 
     public Home(){
+        // INSTANZIO IL CONTROLLER
+
         Controller controller = new Controller();
+
+        // IMPOSTO IL FRAME
+
         JFrame frame = new JFrame("Home");
         frame.setSize(800,500);
         frame.setLocationRelativeTo(null);
@@ -25,24 +28,26 @@ public class Home {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        impiegatiButton.addActionListener(e -> {
+        // IMPOSTO TUTTI GLI ACTION LISTENER
+
+        impiegatiBtn.addActionListener(e -> {
             frame.setVisible(false);
-            ImpiegatoGUI impiegatoGUI = new ImpiegatoGUI(controller, frame);
+            new ImpiegatoGUI(controller, frame);
         });
 
-        laboratoriButton.addActionListener(e -> {
+        laboratoriBtn.addActionListener(e -> {
             frame.setVisible(false);
-            LaboratoriGUI laboratoriGUI = new LaboratoriGUI(controller, frame);
+            new LaboratoriGUI(controller, frame);
         });
 
-        progettiButton.addActionListener(e -> {
+        progettiBtn.addActionListener(e -> {
             frame.setVisible(false);
-            ProgettoGUI progettoGUI = new ProgettoGUI(controller, frame);
+            new ProgettoGUI(controller, frame);
         });
 
-        attrezzatureButton.addActionListener(e -> {
+        attrezzatureBtn.addActionListener(e -> {
             frame.setVisible(false);
-            AttrezzaturaGUI attrezzaturaGUI = new AttrezzaturaGUI(controller, frame);
+            new AttrezzaturaGUI(controller, frame);
         });
     }
 }

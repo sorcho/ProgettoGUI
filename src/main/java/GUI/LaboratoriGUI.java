@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,18 +14,20 @@ public class LaboratoriGUI {
     private JPanel labMainPanel;
     private JPanel buttonsPanel;
     private JPanel labPanel;
-    private JButton homeButton;
-    private JButton addButton;
-    private JButton deleteButton;
+    private JButton homeBtn;
+    private JButton addBtn;
+    private JButton removeBtn;
     private JScrollPane tableScrollPane;
     private JTable labTable;
-    private JButton collegaButton;
-    private JButton afferentiButton;
-    private JButton addAfferenteButton;
-    private JButton acquistaButton;
+    private JButton collegaBtn;
+    private JButton afferentiBtn;
+    private JButton addAfferenteBtn;
+    private JButton acquistaBtn;
     private JFrame frame;
 
-    public LaboratoriGUI(Controller controller, JFrame frameChiamante) {
+    public LaboratoriGUI(@NotNull Controller controller, JFrame frameChiamante) {
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Laboratori");
         frame.setContentPane(labMainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,10 +35,7 @@ public class LaboratoriGUI {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        homeButton.addActionListener(e -> {
-            frame.dispose();
-            frameChiamante.setVisible(true);
-        });
+        // POPOLO LA TABELLA DEI LABORATORI
 
         ArrayList<String> listaNomiLaboratori = controller.getListaNomiLaboratori();
         ArrayList<String> listaRespSci = controller.getListaRespSci();
@@ -57,8 +57,15 @@ public class LaboratoriGUI {
         labTable.setModel(new DefaultTableModel(righe, colonne));
         labTable.setRowHeight(30);
 
-        addButton.addActionListener(e -> {
-            AddLaboratorioGUI addLaboratorioGUI = new AddLaboratorioGUI(controller, frame);
+        // IMPOSTO TUTTI GLI ACTION LISTENER
+
+        homeBtn.addActionListener(e -> {
+            frame.dispose();
+            frameChiamante.setVisible(true);
+        });
+
+        addBtn.addActionListener(e -> {
+            AddLaboratorioGUI addLaboratorioGUI = new AddLaboratorioGUI(controller);
 
             addLaboratorioGUI.frame.addWindowListener(new WindowAdapter() {
                 @Override
@@ -68,7 +75,7 @@ public class LaboratoriGUI {
             });
         });
 
-        deleteButton.addActionListener(e -> {
+        removeBtn.addActionListener(e -> {
             String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
 
             int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare il Laboratorio?", "Conferma", JOptionPane.YES_NO_OPTION);
@@ -76,17 +83,16 @@ public class LaboratoriGUI {
                 try {
                     controller.rimuoviLaboratorio(labSelezionato);
                     JOptionPane.showMessageDialog(null, "Eliminazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    loadTable(controller, colonne);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-
-                loadTable(controller, colonne);
             }
         });
 
-        collegaButton.addActionListener(e -> {
+        collegaBtn.addActionListener(e -> {
             String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
-            SelezionaCupGUI selezionaCupGUI = new SelezionaCupGUI(controller, frame, labSelezionato);
+            SelezionaCupGUI selezionaCupGUI = new SelezionaCupGUI(controller, labSelezionato);
 
             selezionaCupGUI.frame.addWindowListener(new WindowAdapter() {
                 @Override
@@ -96,15 +102,15 @@ public class LaboratoriGUI {
             });
         });
 
-        afferentiButton.addActionListener(e -> {
+        afferentiBtn.addActionListener(e -> {
             String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
 
-            new AfferentiGUI(controller, frame, labSelezionato);
+            new AfferentiGUI(controller, labSelezionato);
         });
 
-        addAfferenteButton.addActionListener(e -> {
+        addAfferenteBtn.addActionListener(e -> {
             String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
-            AddAfferenteGUI addAfferenteGUI = new AddAfferenteGUI(controller, frame, labSelezionato);
+            AddAfferenteGUI addAfferenteGUI = new AddAfferenteGUI(controller, labSelezionato);
             addAfferenteGUI.frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
@@ -113,14 +119,14 @@ public class LaboratoriGUI {
             });
         });
 
-        acquistaButton.addActionListener(e -> {
+        acquistaBtn.addActionListener(e -> {
             String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
 
-            new SelezionaSerialeGUI(controller, frame, labSelezionato);
+            new SelezionaSerialeGUI(controller, labSelezionato);
         });
     }
 
-    private void loadTable(Controller controller, String[] colonne) {
+    private void loadTable(@NotNull Controller controller, @NotNull String[] colonne) {
         ArrayList<String> listaNomiLaboratori = controller.getListaNomiLaboratori();
         ArrayList<String> listaRespSci = controller.getListaRespSci();
         ArrayList<String> listaTopic = controller.getListaTopic();

@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,21 +14,25 @@ public class AttrezzaturaGUI {
     private JPanel attMainPanel;
     private JPanel buttonsPanel;
     private JPanel tablePanel;
-    private JButton homeButton;
-    private JButton addButton;
-    private JButton removeButton;
-    private JButton profButton;
+    private JButton homeBtn;
+    private JButton addBtn;
+    private JButton removeBtn;
+    private JButton profileBtn;
     private JScrollPane tableScrollPane;
     private JTable attTable;
     private JFrame frame;
 
-    public AttrezzaturaGUI(Controller controller, JFrame frameChiamante) {
+    public AttrezzaturaGUI(@NotNull Controller controller, JFrame frameChiamante) {
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Attrezzatura");
         frame.setContentPane(attMainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
+
+        // POPOLO LA TABELLA DELLE ATTREZZATURE
 
         ArrayList<String> listaSeriali = controller.getSerialiAttrezzature();
         ArrayList<String> listaTipi = controller.getListaTipiAttrezzature();
@@ -45,30 +50,31 @@ public class AttrezzaturaGUI {
         attTable.setModel(new DefaultTableModel(righe, colonne));
         attTable.setRowHeight(30);
 
-        homeButton.addActionListener(e -> {
+        // IMPOSTO TUTTI GLI ACTION LISTENER
+
+        homeBtn.addActionListener(e -> {
             frame.dispose();
             frameChiamante.setVisible(true);
         });
 
-        removeButton.addActionListener(e -> {
+        removeBtn.addActionListener(e -> {
             int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler eliminare l'Attrezzatura?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (selezione == JOptionPane.YES_OPTION) {
                 String serialeSelezionato = attTable.getValueAt(attTable.getSelectedRow(), 0).toString();
 
                 try {
-                    controller.rimuoviProgetto(serialeSelezionato);
+                    controller.rimuoviAttrezzatura(serialeSelezionato);
                     JOptionPane.showMessageDialog(null, "Eliminazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    loadTable(controller, colonne);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-
-                loadTable(controller, colonne);
             }
         });
 
-        addButton.addActionListener(e -> {
-            AddAttrezzaturaGUI addAttrezzaturaGUI = new AddAttrezzaturaGUI(controller, frame);
+        addBtn.addActionListener(e -> {
+            AddAttrezzaturaGUI addAttrezzaturaGUI = new AddAttrezzaturaGUI(controller);
 
             addAttrezzaturaGUI.frame.addWindowListener(new WindowAdapter() {
                 @Override
@@ -78,14 +84,14 @@ public class AttrezzaturaGUI {
             });
         });
 
-        profButton.addActionListener(e -> {
+        profileBtn.addActionListener(e -> {
             String serialeSelezionato = attTable.getValueAt(attTable.getSelectedRow(), 0).toString();
 
-            new ProfiloAttrezzaturaGUI(controller, frame, serialeSelezionato);
+            new ProfiloAttrezzaturaGUI(controller, serialeSelezionato);
         });
     }
 
-    private void loadTable(Controller controller, String[] colonne) {
+    private void loadTable(@NotNull Controller controller, @NotNull String[] colonne) {
         ArrayList<String> listaSeriali = controller.getSerialiAttrezzature();
         ArrayList<String> listaTipi = controller.getListaTipiAttrezzature();
         ArrayList<Float> listaCosti = controller.getListaCostiAttrezzature();
@@ -95,7 +101,7 @@ public class AttrezzaturaGUI {
         for (int i = 0; i < listaSeriali.size(); i++) {
             righe[i][0] = listaSeriali.get(i);
             righe[i][1] = listaTipi.get(i);
-            righe[i][2] = listaCosti.get(i);
+            righe[i][2] = listaCosti.get(i) + "€";
         }
 
         DefaultTableModel dtm = (DefaultTableModel) attTable.getModel();

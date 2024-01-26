@@ -1,5 +1,6 @@
+package Main;
+
 import GUI.Home;
-import javax.swing.*;
 import com.formdev.flatlaf.IntelliJTheme;
 
 public class Main {

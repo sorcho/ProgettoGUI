@@ -19,23 +19,21 @@ public class ImplementazioneAttrezzaturaDAO implements AttrezzaturaDAO {
     }
 
     @Override
-    public boolean aggiungiAttrezzatura(String seriale, String tipo) throws SQLException {
+    public void aggiungiAttrezzatura(String seriale, String tipo) throws SQLException {
         PreparedStatement query;
         query = connection.prepareCall("call add_attrezzatura(?, ?)");
         query.setString(1, seriale);
         query.setString(2, tipo);
-        int risultato = query.executeUpdate();
-        return risultato == 1;
+        query.executeUpdate();
     }
 
     @Override
-    public boolean eliminaAttrezzatura(String seriale) throws SQLException {
+    public void eliminaAttrezzatura(String seriale) throws SQLException {
         PreparedStatement query;
         query = connection.prepareStatement("delete from attrezzatura where seriale = ?");
 
         query.setString(1, seriale);
 
-        int risultato = query.executeUpdate();
-        return risultato == 1;
+        query.executeUpdate();
     }
 }

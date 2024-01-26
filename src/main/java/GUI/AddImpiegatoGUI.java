@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.sql.Date;
@@ -14,8 +15,8 @@ public class AddImpiegatoGUI {
     private JPanel addImpMainPanel;
     private JPanel insPanel;
     private JPanel buttonsPanel;
-    private JButton annullaButton;
-    private JButton okButton;
+    private JButton cancelBtn;
+    private JButton okBtn;
     private JLabel cfLabel;
     private JLabel nomeLabel;
     private JLabel cognomeLabel;
@@ -29,16 +30,17 @@ public class AddImpiegatoGUI {
     private JLabel dataAssLabel;
     private JLabel contrattoLabel;
     private JLabel dataScadLabel;
-    private JRadioButton indRadioButton;
-    private JRadioButton progRadioButton;
+    private JRadioButton indRadioBtn;
+    private JRadioButton progRadioBtn;
     private JLabel categoriaLabel;
     private JTextField categoriaTextField;
     private JLabel cupLabel;
     private JTextField cupTextField;
     JFrame frame;
 
-    public AddImpiegatoGUI(Controller controller, JFrame frameChiamante) {
-        // Inizializzazione e settaggio del frame principale
+    public AddImpiegatoGUI(@NotNull Controller controller) {
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Impiegati");
         frame.setLocationRelativeTo(null);
         frame.setContentPane(addImpMainPanel);
@@ -47,45 +49,41 @@ public class AddImpiegatoGUI {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        bg.add(indRadioButton);
-        bg.add(progRadioButton);
+        // AGGIUNGO I RADIOBUTTON AL BUTTONGROUP
+        bg.add(indRadioBtn);
+        bg.add(progRadioBtn);
 
-        indRadioButton.addActionListener(e -> {
+        // IMPOSTO GLI ACTION LISTENER PER TUTTI I COMPONENTI
+
+        indRadioBtn.addActionListener(e -> {
             dataScadTextField.setEnabled(false);
             cupTextField.setEnabled(false);
         });
 
-        progRadioButton.addActionListener(e -> {
+        progRadioBtn.addActionListener(e -> {
             dataScadTextField.setEnabled(true);
             cupTextField.setEnabled(true);
         });
 
-        annullaButton.addActionListener(e -> frame.dispose());
+        cancelBtn.addActionListener(e -> frame.dispose());
 
-        okButton.addActionListener(e -> {
-            String cf;
-            String nome;
-            String cognome;
-            String dataNascitaTemp;
-            String dataAssunzioneTemp;
-            String dataScadenzaTemp;
-            String categoria;
-            String cup;
-
-            Date dataNascita = null;
-            Date dataAssunzione = null;
-            Date dataScadenza = null;
-
+        okBtn.addActionListener(e -> {
             int risposta = JOptionPane.showConfirmDialog(null, "Confermi di voler assumere questo impiegato?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (risposta == JOptionPane.YES_OPTION) {
-                cf = cfTextField.getText();
-                nome = nomeTextField.getText();
-                cognome = cognomeTextField.getText();
-                dataNascitaTemp = dataNascitaTextField.getText();
-                dataAssunzioneTemp = dataAssTextField.getText();
-                dataScadenzaTemp = dataScadTextField.getText();
-                cup = cupTextField.getText();
+                String cf = cfTextField.getText();
+                String nome = nomeTextField.getText();
+                String cognome = cognomeTextField.getText();
+                String dataNascitaTemp = dataNascitaTextField.getText();
+                String dataAssunzioneTemp = dataAssTextField.getText();
+                String dataScadenzaTemp = dataScadTextField.getText();
+                String cup = cupTextField.getText();
+
+                String categoria;
+
+                Date dataNascita = null;
+                Date dataAssunzione = null;
+                Date dataScadenza = null;
 
                 if (!categoriaTextField.getText().isEmpty())
                     categoria = categoriaTextField.getText();
@@ -105,11 +103,10 @@ public class AddImpiegatoGUI {
                 try {
                     controller.aggiungiImpiegato(cf, nome, cognome, dataNascita, dataAssunzione, dataScadenza, categoria, cup);
                     JOptionPane.showMessageDialog(null, "Inserimento avvenuto con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-
-                frame.dispose();
             }
         });
     }

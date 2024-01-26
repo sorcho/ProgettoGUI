@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -13,11 +14,13 @@ public class PromuoviGUI {
     private JLabel titleLabel;
     private JList dirList;
     private JScrollPane listScrollPane;
-    private JButton annullaButton;
-    private JButton okButton;
+    private JButton cancelBtn;
+    private JButton okBtn;
     private JFrame frame;
 
-    public PromuoviGUI(Controller controller, JFrame frameChiamante, String cfSelezionato) {
+    public PromuoviGUI(@NotNull Controller controller, String cfSelezionato) {
+        // IMPOSTO IL FRAME
+
         frame = new JFrame("Promuovi Senior");
         frame.setContentPane(promMainPanel);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -25,9 +28,7 @@ public class PromuoviGUI {
         frame.pack();
         frame.setVisible(true);
 
-        annullaButton.addActionListener(e -> {
-            frame.dispose();
-        });
+        // IMPOSTO IL MODEL DELLA LISTA
 
         dirList.setModel(new DefaultListModel());
         DefaultListModel dfl = (DefaultListModel) dirList.getModel();
@@ -37,23 +38,26 @@ public class PromuoviGUI {
                 (DefaultListCellRenderer) dirList.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
+        // POPOLO LA LISTA CON TUTTI I DIRIGENTI
+
         ArrayList<String> listaDirigenti = controller.getListaDirigenti();
 
         for (String s : listaDirigenti)
             dfl.addElement(s);
 
-        okButton.addActionListener(e -> {
+        // IMPOSTO TUTTI GLI ACTION LISTENER
+
+        okBtn.addActionListener(e -> {
             String dirSelezionato = dirList.getSelectedValue().toString();
             try {
                 controller.promuovi(cfSelezionato, dirSelezionato);
                 JOptionPane.showMessageDialog(null, "Promozione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
                 frame.dispose();
-
-
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
             }
-            frame.dispose();
         });
+
+        cancelBtn.addActionListener(e -> frame.dispose());
     }
 }

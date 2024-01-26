@@ -311,15 +311,15 @@ public class Controller {
      * @return Un oggetto di tipo <font color="green">Impiegato</font> se il <font color="#00FFFF">cf</font> è presente nella listaImpiegati, <font color="red">null</font> altrimenti
      */
     public Impiegato getDatiProfilo(String cf) {
-        ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
+        ArrayList<Promozione> listaPromozioniImpiegato = new ArrayList<>();
 
-        ArrayList<Promozione> listaPromozioni = new ArrayList<>();
-
-        impiegatoDAO.getPromozioni(cf, listaPromozioni);
+        for (Promozione p : listaPromozioni)
+            if (p.getImpiegato().equals(cf))
+                listaPromozioniImpiegato.add(p);
 
         for (Impiegato i : listaImpiegati) {
             if (Objects.equals(cf, i.getCf())) {
-                i.setListaPromozioni(listaPromozioni);
+                i.setListaPromozioni(listaPromozioniImpiegato);
                 return i;
             }
         }
@@ -465,9 +465,10 @@ public class Controller {
 
     /**
      * Prende i dati dalla GUI e li passa al DAO in modo tale da aggiungere un nuovo laboratorio al database, ricarica successivamente listaLaboratori
-     * @param nome Nome del laboratorio
+     *
+     * @param nome    Nome del laboratorio
      * @param respSci Responsabile Scientifico del laboratorio (impiegato di categoria 'senior')
-     * @param topic Topic del laboratorio
+     * @param topic   Topic del laboratorio
      * @throws SQLException Nel caso ci siano dei controlli violati nel database
      */
     public void aggiungiLaboratorio(String nome, String respSci, String topic) throws SQLException {
@@ -481,19 +482,32 @@ public class Controller {
 
 
     /**
+     * Prende i dati dalla GUI e li passa al DAO, in modo tale da eliminare il laboratorio dal database. Aggiorna successivamente listaLaboratori
      *
-     * @param nomeLab
-     * @throws SQLException
+     * @param nomeLab Nome del laboratorio da eliminare
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
      */
     public void rimuoviLaboratorio(String nomeLab) throws SQLException {
         LaboratorioDAO laboratorioDAO = new ImplementazioneLaboratorioDAO();
 
         laboratorioDAO.rimuoviLaboratorio(nomeLab);
 
-        listaLaboratori.clear();
-        getLaboratoriDatabase();
+        for (Laboratorio l : listaLaboratori) {
+            if (l.getNome().equals(nomeLab)) {
+                listaLaboratori.remove(l);
+                break;
+            }
+        }
     }
 
+    /**
+     * Prende i dati dalla GUI per poi passarli al DAO in modo tale da fare una query che associa un laboratorio al progetto.
+     * Effettua poi il collegamento anche in locale
+     *
+     * @param cup         CUP del progetto
+     * @param laboratorio Nome del laboratorio
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
     public void associaProgettoLaboratorio(String cup, String laboratorio) throws SQLException {
         ProgettoDAO progettoDAO = new ImplementazioneProgettoDAO();
         progettoDAO.collegaLaboratorio(laboratorio, cup);
@@ -504,6 +518,12 @@ public class Controller {
         }
     }
 
+    /**
+     * Ottiene la lista degli afferenti per un laboratorio. Aggiunge la lista anche in locale
+     *
+     * @param laboratorio Laboratorio di cui stampare la lista degli afferenti
+     * @return ArrayList<String> contenente ogni afferente al laboratorio
+     */
     public ArrayList<String> getListaAfferentiLaboratorio(String laboratorio) {
         GestionaleDAO gestionaleDAO = new ImplementazioneGestionaleDAO();
         ArrayList<String> listaAfferenti = new ArrayList<>();
@@ -518,6 +538,13 @@ public class Controller {
         return listaAfferenti;
     }
 
+    /**
+     * Aggiunge un afferente a un laboratorio
+     *
+     * @param cf          Impiegato da aggiungere alla lista degli afferenti
+     * @param laboratorio Laboratorio al quale aggiungere l'afferente
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
     public void aggiungiAfferente(String cf, String laboratorio) throws SQLException {
         LaboratorioDAO laboratorioDAO = new ImplementazioneLaboratorioDAO();
         laboratorioDAO.aggiungiAfferente(cf, laboratorio);
@@ -529,6 +556,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Permette a un laboratorio di acquistare un'attrezzatura usando i fondi del progetto al quale è collegato
+     *
+     * @param seriale Seriale dell'attrezzatura da acquistare
+     * @param nomeLab Nome del laboratorio che effettua l'acquisto
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
     public void acquistaAttrezzatura(String seriale, String nomeLab) throws SQLException {
         LaboratorioDAO laboratorioDAO = new ImplementazioneLaboratorioDAO();
 
@@ -541,6 +575,11 @@ public class Controller {
 
     // FUNZIONI PER LA GUI RIFERITE AI PROGETTI
 
+    /**
+     * Ottiene la lista dei cup di tutti i progetti
+     *
+     * @return ArrayList<String> contenente il cup di tutti i progetti
+     */
     public ArrayList<String> getCupProgetti() {
         ArrayList<String> listaCupProgetti = new ArrayList<>();
 
@@ -550,6 +589,11 @@ public class Controller {
         return listaCupProgetti;
     }
 
+    /**
+     * Ottiene la lista dei nomi dei progetti
+     *
+     * @return ArrayList<String> contenente i nomi di tutti i progetti
+     */
     public ArrayList<String> getListaNomiProgetti() {
         ArrayList<String> listaNomiProgetti = new ArrayList<>();
 
@@ -559,6 +603,16 @@ public class Controller {
         return listaNomiProgetti;
     }
 
+    /**
+     * Permette di aggiungere un progetto al database prendendo i dati dalla GUI e passandoli al DAO.
+     * Aggiorna poi listaProgetto
+     *
+     * @param cup    CUP del progetto
+     * @param nome   Nome del progetto
+     * @param refSci Referente Scientifico (impiegato 'senior') del progetto
+     * @param resp   Responsabile (impiegato 'dirigente') del progetto
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
     public void aggiungiProgetto(String cup, String nome, String refSci, String resp) throws SQLException {
         ProgettoDAO progettoDAO = new ImplementazioneProgettoDAO();
         progettoDAO.aggiungiProgetto(cup, refSci, resp, nome);
@@ -567,6 +621,12 @@ public class Controller {
         getProgettiDatabase();
     }
 
+    /**
+     * Rimuove un progetto dal database prendendo i dati dalla GUI e aggiorna listaProgetti
+     *
+     * @param cup Progetto da eliminare
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
     public void rimuoviProgetto(String cup) throws SQLException {
         ProgettoDAO progettoDAO = new ImplementazioneProgettoDAO();
 
@@ -589,6 +649,11 @@ public class Controller {
         return listaRefSci;
     }
 
+    /**
+     * Ottiene tutti i responsabili da listaProgetti
+     *
+     * @return ArrayList<String> contenente tutti i responsabili dei progetti
+     */
     public ArrayList<String> getListaResponsabili() {
         ArrayList<String> listaResponsabili = new ArrayList<>();
 
@@ -600,6 +665,11 @@ public class Controller {
 
     // FUNZIONI PER LA GUI RIFERITE ALLE ATTREZZATURE
 
+    /**
+     * Ottiene la lista dei seriali da listaAttrezzature
+     *
+     * @return ArrayList<String> contenente tutti i seriali delle attrezzature
+     */
     public ArrayList<String> getSerialiAttrezzature() {
         ArrayList<String> listaSeriali = new ArrayList<>();
 
@@ -609,6 +679,11 @@ public class Controller {
         return listaSeriali;
     }
 
+    /**
+     * Ottiene la lista del tipo di attrezzatura da listaAttrezzature
+     *
+     * @return ArrayList<String> contenente tutti i tipi di attrezzatura
+     */
     public ArrayList<String> getListaTipiAttrezzature() {
         ArrayList<String> listaTipi = new ArrayList<>();
 
@@ -618,6 +693,11 @@ public class Controller {
         return listaTipi;
     }
 
+    /**
+     * Ottiene la lista dei costi da listaAttrezzature
+     *
+     * @return ArrayList<String> contenente tutti i costi delle attrezzature
+     */
     public ArrayList<Float> getListaCostiAttrezzature() {
         ArrayList<Float> listaCosti = new ArrayList<>();
 
@@ -627,6 +707,14 @@ public class Controller {
         return listaCosti;
     }
 
+    /**
+     * Prende i parametri dalla GUI, li passa al DAO per aggiungere l'attrezzatura al database.
+     * Aggiorna poi listaAttrezzatura
+     *
+     * @param seriale Seriale dell'attrezzatura
+     * @param tipo    Tipo dell'attrezzatura
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
     public void aggiungiAttrezzatura(String seriale, String tipo) throws SQLException {
         AttrezzaturaDAO attrezzaturaDAO = new ImplementazioneAttrezzaturaDAO();
 
@@ -636,6 +724,27 @@ public class Controller {
         getAttrezzatureDatabase();
     }
 
+    /**
+     * Prende i parametri della GUI, li passa al DAO per rimuovere l'attrezzatura dal database
+     * Aggiorna poi listaAttrezzatura
+     *
+     * @param seriale Seriale dell'attrezzatura da eliminare
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
+    public void rimuoviAttrezzatura(String seriale) throws SQLException {
+        AttrezzaturaDAO attrezzaturaDAO = new ImplementazioneAttrezzaturaDAO();
+
+        attrezzaturaDAO.eliminaAttrezzatura(seriale);
+
+        listaAttrezzature.removeIf(a -> a.getSeriale().equals(seriale));
+    }
+
+    /**
+     * Prende tutti i dati dell'attrezzatura interessata
+     *
+     * @param seriale Attrezzatura della quale prendere tutti i dati
+     * @return Un oggetto di tipo Attrezzatura in caso esista nel database, null altrimenti
+     */
     public Attrezzatura getDatiAttrezzatura(String seriale) {
         for (Attrezzatura a : listaAttrezzature)
             if (a.getSeriale().equals(seriale))

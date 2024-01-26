@@ -1,9 +1,9 @@
 package GUI;
 
 import Controller.Controller;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,12 +14,11 @@ public class SelezionaSerialeGUI {
     private JScrollPane serialeScrollPane;
     private JList serialeList;
     private JPanel buttonsPanel;
-    private JButton annullaButton;
-    private JButton okButton;
-
+    private JButton cancelBtn;
+    private JButton okBtn;
     private JFrame frame;
 
-    public SelezionaSerialeGUI(Controller controller, JFrame frameChiamante, String labSelezionato) {
+    public SelezionaSerialeGUI(@NotNull Controller controller, String labSelezionato) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Seleziona Seriale");
@@ -46,13 +45,9 @@ public class SelezionaSerialeGUI {
 
         // IMPOSTO TUTTI GLI ACTION LISTENER
 
-        // ANNULLA LA SELEZIONE E TORNA ALLA HOME
-        annullaButton.addActionListener(e -> {
-            frame.dispose();
-        });
+        cancelBtn.addActionListener(e -> frame.dispose());
 
-        // CONFERMA LA SELEZIONE ED EFFETTUA LA QUERY
-        okButton.addActionListener(e -> {
+        okBtn.addActionListener(e -> {
             int selezione = JOptionPane.showConfirmDialog(null, "Sicuro di voler acquistare questa Attrezzatura?", "Conferma", JOptionPane.YES_NO_OPTION);
 
             if (selezione == JOptionPane.YES_OPTION) {
