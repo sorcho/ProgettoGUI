@@ -32,7 +32,7 @@
             </constraints>
             <properties>
               <font name="JetBrains Mono" size="20" style="0"/>
-              <text value="Nome:"/>
+              <text value="Seriale:"/>
             </properties>
           </component>
           <component id="8b9b4" class="javax.swing.JTextField" binding="tipoTextField">
@@ -51,7 +51,7 @@
             </constraints>
             <properties>
               <font name="JetBrains Mono" size="20" style="0"/>
-              <text value="Topic:"/>
+              <text value="Tipo:"/>
             </properties>
           </component>
         </children>

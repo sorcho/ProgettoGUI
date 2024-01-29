@@ -24,6 +24,7 @@ public class LaboratoriGUI {
     private JButton afferentiBtn;
     private JButton addAfferenteBtn;
     private JButton acquistaBtn;
+    private JButton sostBtn;
     private JFrame frame;
 
     public LaboratoriGUI(@NotNull Controller controller, JFrame frameChiamante) {

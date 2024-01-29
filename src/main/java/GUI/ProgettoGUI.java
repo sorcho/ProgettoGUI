@@ -19,6 +19,7 @@ public class ProgettoGUI {
     private JButton acquistaButton;
     private JScrollPane tableScrollPane;
     private JTable progTable;
+    private JButton sostBtn;
     private JFrame frame;
 
     public ProgettoGUI(@NotNull Controller controller, JFrame frameChiamante) {
