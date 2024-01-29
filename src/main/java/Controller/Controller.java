@@ -173,7 +173,7 @@ public class Controller {
         ArrayList<String> listaNomiLab = new ArrayList<>();
         ArrayList<String> listaCUP = new ArrayList<>();
 
-        gestionale.getAttrezzatura(
+        gestionale.getAttrezzature(
                 listaSeriale,
                 listaTipo,
                 listaCosto,

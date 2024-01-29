@@ -79,7 +79,7 @@ public class ImplementazioneGestionaleDAO implements GestionaleDAO {
     }
 
     @Override
-    public void getAttrezzatura(ArrayList<String> listaSeriali, ArrayList<String> listaTipi, ArrayList<Float> listaCosti, ArrayList<String> listaNomiLab, ArrayList<String> listaCup) {
+    public void getAttrezzature(ArrayList<String> listaSeriali, ArrayList<String> listaTipi, ArrayList<Float> listaCosti, ArrayList<String> listaNomiLab, ArrayList<String> listaCup) {
         try {
             PreparedStatement query;
 

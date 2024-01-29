@@ -56,7 +56,7 @@ public interface GestionaleDAO {
      * @param listaNomiLab Lista dei Laboratori che possiedono l'Attrezzatura
      * @param listaCup     Lista dei Progetti che acquistano l'Attrezzatura
      */
-    void getAttrezzatura(
+    void getAttrezzature(
             ArrayList<String> listaSeriali,
             ArrayList<String> listaTipi,
             ArrayList<Float> listaCosti,
