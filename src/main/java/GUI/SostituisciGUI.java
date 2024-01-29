@@ -4,6 +4,7 @@ import Controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SostituisciGUI {
@@ -11,8 +12,11 @@ public class SostituisciGUI {
     private JLabel titleLabel;
     private JScrollPane listScrollPanel;
     private JList impList;
-    private JFrame frame;
-    public SostituisciGUI(Controller controller, ArrayList<String> listaImpiegati) {
+    private JPanel buttonsPanel;
+    private JButton cancelBtn;
+    private JButton okBtn;
+    JFrame frame;
+    public SostituisciGUI(Controller controller, ArrayList<String> listaImpiegati, String vecchioCF) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Lista Afferenti");
@@ -32,5 +36,28 @@ public class SostituisciGUI {
 
         impList.setModel(new DefaultListModel());
         DefaultListModel dfl = (DefaultListModel) impList.getModel();
+
+        for (String s : listaImpiegati)
+            dfl.addElement(s);
+
+        // IMPOSTO TUTTI GLI ACTION LISTENER
+
+        cancelBtn.addActionListener(e -> frame.dispose());
+
+        okBtn.addActionListener(e -> {
+            int risultato = JOptionPane.showConfirmDialog(null, "Confermi la selezione?", "Conferma", JOptionPane.YES_NO_OPTION);
+
+            if (risultato == JOptionPane.YES_NO_OPTION) {
+                String nuovoCF = impList.getSelectedValue().toString();
+
+                try {
+                    controller.sostituisciImpiegato(vecchioCF, nuovoCF);
+                    JOptionPane.showMessageDialog(null, "Sostituzione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 }

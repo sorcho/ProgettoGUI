@@ -11,7 +11,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class LaboratoriGUI {
+public class LaboratorioGUI {
     private JPanel labMainPanel;
     private JPanel buttonsPanel;
     private JPanel labPanel;
@@ -27,7 +27,7 @@ public class LaboratoriGUI {
     private JButton sostBtn;
     private JFrame frame;
 
-    public LaboratoriGUI(@NotNull Controller controller, JFrame frameChiamante) {
+    public LaboratorioGUI(@NotNull Controller controller, JFrame frameChiamante) {
         // IMPOSTO IL FRAME
 
         frame = new JFrame("Laboratori");
@@ -146,6 +146,25 @@ public class LaboratoriGUI {
             String labSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 0).toString();
 
             new SelezionaSerialeGUI(controller, labSelezionato);
+        });
+
+        sostBtn.addActionListener(e -> {
+            int risposta = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler sostituire il Responsabile Scientifico?", "Conferma", JOptionPane.YES_NO_OPTION);
+
+            if (risposta == JOptionPane.YES_OPTION){
+                ArrayList<String> listaSenior = controller.getListaSenior();
+                String cfSelezionato = labTable.getValueAt(labTable.getSelectedRow(), 1).toString();
+
+                SostituisciGUI sostituisciGUI = new SostituisciGUI(controller, listaSenior, cfSelezionato);
+
+                sostituisciGUI.frame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        loadTable(controller, colonne);
+                        resizeWidthTable(labTable);
+                    }
+                });
+            }
         });
     }
 

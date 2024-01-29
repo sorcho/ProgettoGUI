@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -100,6 +102,33 @@ public class ProgettoGUI {
                     JOptionPane.showMessageDialog(null, "Errore: " + ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                 }
             }
+        });
+
+        sostBtn.addActionListener(e -> {
+            String[] scelte = {"Responsabile", "Referente Scientifico", "Annulla"};
+            int risposta = JOptionPane.showOptionDialog(null, "Vuoi sostituire il Responsabile o il Referente Scientifico?", "Scelta", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, scelte, null);
+
+            SostituisciGUI sostituisciGUI = null;
+
+            if (risposta == 0) {
+                ArrayList<String> listaDirigenti = controller.getListaDirigenti();
+                String cfSelezionato = progTable.getValueAt(progTable.getSelectedRow(), 3).toString();
+
+                sostituisciGUI = new SostituisciGUI(controller, listaDirigenti, cfSelezionato);
+            } else if (risposta == 1){
+                ArrayList<String> listaSenior = controller.getListaSenior();
+                String cfSelezionato = progTable.getValueAt(progTable.getSelectedRow(), 2).toString();
+
+                sostituisciGUI = new SostituisciGUI(controller, listaSenior, cfSelezionato);
+            }
+
+            sostituisciGUI.frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadTable(controller, colonne);
+                    resizeWidthTable(progTable);
+                }
+            });
         });
     }
 

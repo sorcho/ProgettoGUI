@@ -37,7 +37,7 @@ public class Home {
 
         laboratoriBtn.addActionListener(e -> {
             frame.setVisible(false);
-            new LaboratoriGUI(controller, frame);
+            new LaboratorioGUI(controller, frame);
         });
 
         progettiBtn.addActionListener(e -> {

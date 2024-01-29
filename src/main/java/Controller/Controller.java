@@ -304,6 +304,30 @@ public class Controller {
         listaImpiegati.removeIf(i -> i.getCf().equals(cf));
     }
 
+    public void sostituisciImpiegato(String vecchioCF, String nuovoCF) throws SQLException {
+        ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
+
+        impiegatoDAO.sostituisciImpiegato(vecchioCF, nuovoCF);
+
+        for (Laboratorio l : listaLaboratori)
+            if (l.getRespSci().equals(vecchioCF)) {
+                l.setRespSci(nuovoCF);
+                return;
+            }
+
+        for (Progetto p : listaProgetti) {
+            if (p.getResp().equals(vecchioCF)) {
+                p.setResp(nuovoCF);
+                return;
+            }
+
+            if (p.getRefSci().equals(vecchioCF)) {
+                p.setRefSci(nuovoCF);
+                return;
+            }
+        }
+    }
+
     /**
      * Prende il Codice Fiscale dalla GUI e ottiene tutti i dati dell'impiegato scelto da listaImpiegati
      *
