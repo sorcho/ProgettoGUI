@@ -304,6 +304,13 @@ public class Controller {
         listaImpiegati.removeIf(i -> i.getCf().equals(cf));
     }
 
+    /**
+     * Permette di sostituire un Referente/Responsabile in un Progetto/Laboratorio
+     *
+     * @param vecchioCF Impiegato da sostituire
+     * @param nuovoCF Impiegato che sostituisce
+     * @throws SQLException Nel caso ci siano dei controlli violati nel database
+     */
     public void sostituisciImpiegato(String vecchioCF, String nuovoCF) throws SQLException {
         ImpiegatoDAO impiegatoDAO = new ImplementazioneImpiegatoDAO();
 
